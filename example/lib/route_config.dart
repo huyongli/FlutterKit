@@ -1,3 +1,4 @@
+import 'package:example/demo/demo_expansion_widget.dart';
 import 'package:flutter/widgets.dart';
 
 import 'demo/demo_animated_switcher.dart';
@@ -14,6 +15,7 @@ class RouteNames {
   static const String heroPage = 'Hero';
   static const String staggerAnimationPage = 'StaggerAnimation';
   static const String animatedSwitcherPage = 'AnimatedSwitcherAnimation';
+  static const String expansionPage = 'ExpansionWidget';
 }
 
 class RouteConfig {
@@ -24,5 +26,6 @@ class RouteConfig {
     RouteNames.heroPage: (BuildContext context) => HeroAnimationRoute(),
     RouteNames.staggerAnimationPage: (BuildContext context) => StaggerAnimationPage(),
     RouteNames.animatedSwitcherPage: (BuildContext context) => DemoAnimatedSwitcher(),
+    RouteNames.expansionPage: (BuildContext context) => DemoExpansionWidget(),
   };
 }
