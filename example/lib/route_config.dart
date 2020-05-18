@@ -1,5 +1,6 @@
 import 'package:example/demo/demo_expansion_widget.dart';
 import 'package:example/demo/demo_http/demo_http.dart';
+import 'package:example/demo/demo_icon_text.dart';
 import 'package:flutter/widgets.dart';
 
 import 'demo/demo_animated_switcher.dart';
@@ -18,6 +19,7 @@ class RouteNames {
   static const String animatedSwitcherPage = 'AnimatedSwitcherAnimation';
   static const String expansionPage = 'ExpansionWidget';
   static const String httpPage = 'Http';
+  static const String iconTextPage = 'IconText';
 }
 
 class RouteConfig {
@@ -30,5 +32,6 @@ class RouteConfig {
     RouteNames.animatedSwitcherPage: (BuildContext context) => DemoAnimatedSwitcher(),
     RouteNames.expansionPage: (BuildContext context) => DemoExpansionWidget(),
     RouteNames.httpPage: (BuildContext context) => DemoHttp(),
+    RouteNames.iconTextPage: (BuildContext context) => DemoIconText(),
   };
 }
