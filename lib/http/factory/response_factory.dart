@@ -1,6 +1,5 @@
 import '../request.dart';
 
-abstract class ResponseFactory<T> {
-  Future<Map<String, dynamic>> handleResponse(
-      Request request, dynamic response);
+abstract class ResponseFactory {
+  Future<dynamic> handleResponse(Request request, dynamic response);
 }

@@ -9,6 +9,17 @@ class Request {
   final int connectTimeout;// milliseconds
   final int receiveTimeout;// milliseconds
 
+  String get url {
+    bool domainSlash = domain.endsWith('/');
+    bool pathSlash = path.startsWith('/');
+    if (domainSlash && pathSlash) {
+      return '$domain${path.replaceFirst('/', '')}';
+    } else if (!domainSlash && !pathSlash) {
+      return '$domain/$path';
+    }
+    return '$domain$path';
+  }
+
   Request({
     this.domain,
     this.path,

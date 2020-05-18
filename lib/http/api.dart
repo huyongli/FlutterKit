@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 import 'api_executor.dart';
 import 'factory/request_client.dart';
@@ -45,7 +45,7 @@ class Api {
       assert(connectTimeout > 0),
       assert(readTimeout > 0);
   
-  Future<Map<String, dynamic>> execute() async {
+  Future<dynamic> execute() async {
     return await _apiExecutor.execute(this);
   }
 

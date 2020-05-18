@@ -4,7 +4,7 @@ import 'request.dart';
 class ApiExecutor {
   Map<String, Api> _cacheApi = {};
 
-  Future<Map<String, dynamic>> execute(Api api) async {
+  Future<dynamic> execute(Api api) async {
     String domain = await api.domain.newDomain();
     Map<String, dynamic> params = await api.params.buildRequestParams();
     String path = await api.path.newPath(params, api.method);
@@ -22,7 +22,7 @@ class ApiExecutor {
     api.key = request.toString();
     _cacheApi[api.key] = api;
 
-    Map<String, dynamic> response;
+    dynamic response;
     try {
       dynamic resp = await api.client.execute(request);
       response = await api.response.handleResponse(request, resp);

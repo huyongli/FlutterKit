@@ -1,6 +1,7 @@
 import 'package:example/common/common_page.dart';
-import 'package:example/demo/demo_http/common_api.dart';
 import 'package:flutter/material.dart';
+
+import 'request/common_api.dart';
 
 class DemoHttp extends StatefulWidget {
 
@@ -43,9 +44,9 @@ class _DemoHttpState extends State<DemoHttp> {
   }
 
   void requestList() async {
-    Map<String, dynamic> response = await CommonApi(path: 'list').execute();
+    List<dynamic> response = await CommonApi(path: 'list').execute();
     setState(() {
-      result = response['list'].toString();
+      result = response.toString();
     });
   }
 
