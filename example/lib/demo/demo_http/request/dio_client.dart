@@ -24,7 +24,7 @@ class DioClient extends RequestClient {
                 options: RequestOptions(
                     headers: request.headers,
                     connectTimeout: request.connectTimeout,
-                    receiveTimeout: request.receiveTimeout));
+                    receiveTimeout: request.readTimeout));
             break;
           case RequestMethod.GET:
             response = await _dio.get(request.url,
@@ -33,7 +33,7 @@ class DioClient extends RequestClient {
                 options: RequestOptions(
                     headers: request.headers,
                     connectTimeout: request.connectTimeout,
-                    receiveTimeout: request.receiveTimeout));
+                    receiveTimeout: request.readTimeout));
             break;
           case RequestMethod.PATCH:
             response = await _dio.patch(request.url,
@@ -42,7 +42,7 @@ class DioClient extends RequestClient {
                 options: RequestOptions(
                     headers: request.headers,
                     connectTimeout: request.connectTimeout,
-                    receiveTimeout: request.receiveTimeout));
+                    receiveTimeout: request.readTimeout));
             break;
           case RequestMethod.DELETE:
             response = await _dio.delete(request.url,
@@ -51,7 +51,7 @@ class DioClient extends RequestClient {
                 options: RequestOptions(
                     headers: request.headers,
                     connectTimeout: request.connectTimeout,
-                    receiveTimeout: request.receiveTimeout));
+                    receiveTimeout: request.readTimeout));
             break;
           default:
             break;

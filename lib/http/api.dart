@@ -18,11 +18,11 @@ class Api {
   final RequestClient client;
   final int connectTimeout;// milliseconds
   final int readTimeout;// milliseconds
+  final RequestMethod method;
 
   ApiExecutor _apiExecutor = ApiExecutor();
-  
-  RequestMethod method;
-  
+
+  /// update by [ApiExecutor]
   String key;
 
   Api({

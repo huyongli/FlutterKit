@@ -17,7 +17,7 @@ class ApiExecutor {
         headers: headers,
         params: params,
         connectTimeout: api.connectTimeout,
-        receiveTimeout: api.readTimeout);
+        readTimeout: api.readTimeout);
 
     api.key = request.toString();
     _cacheApi[api.key] = api;
