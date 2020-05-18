@@ -1,6 +1,7 @@
 library laohu_kit;
 
 export 'animation/direction_slide_transition.dart';
+
 export 'widget/expansion_widget.dart';
 
 export 'http/factory/impl/default_path_factory.dart';
@@ -17,3 +18,6 @@ export 'http/api_executor.dart';
 export 'http/request.dart';
 export 'http/request_exception.dart';
 export 'http/request_method.dart';
+
+export 'util/text_util.dart';
+export 'util/type_util.dart';
