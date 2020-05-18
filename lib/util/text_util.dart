@@ -44,4 +44,13 @@ class TextUtil {
     }
     return text;
   }
+
+  /// 对金额进行格式化：￥12,333,333
+  static String formatMoneyPattern(String text, {String pattern = '￥', bool isSeparate = true, String separate = ','}) {
+    if (isTrimEmpty(text)) {
+      return '';
+    }
+    String tmp = isSeparate ? formatDigitPatternEnd(text, digit: 3, pattern: separate) : text;
+    return '$pattern$tmp';
+  }
 }
