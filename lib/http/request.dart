@@ -1,0 +1,26 @@
+import 'request_method.dart';
+
+class Request {
+  final String domain;
+  final String path;
+  final RequestMethod method;
+  final Map<String, dynamic> headers;
+  final Map<String, dynamic> params;
+  final int connectTimeout;// milliseconds
+  final int receiveTimeout;// milliseconds
+
+  Request({
+    this.domain,
+    this.path,
+    this.method,
+    this.headers,
+    this.params,
+    this.connectTimeout,
+    this.receiveTimeout
+  });
+
+  @override
+  String toString() {
+    return '$domain$path${method.toString()}${headers.toString()}${params.toString()}';
+  }
+}
