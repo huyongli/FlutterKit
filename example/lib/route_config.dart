@@ -1,6 +1,7 @@
 import 'package:example/demo/demo_expansion_widget.dart';
 import 'package:example/demo/demo_http/demo_http.dart';
 import 'package:example/demo/demo_icon_text.dart';
+import 'package:example/demo/demo_reader/demo_reader.dart';
 import 'package:flutter/widgets.dart';
 
 import 'demo/demo_animated_switcher.dart';
@@ -11,6 +12,7 @@ import 'demo/demo_inheritedwidget/demo_inheritedwidget.dart';
 import 'demo/demo_stagger_animation.dart';
 
 class RouteNames {
+  static const String readerPage = 'Reader';
   static const String constrainedBoxPage = 'ConstrainedBox';
   static const String inheritedWidgetPage = 'InheritedWidget';
   static const String customProviderPage = 'CustomProvider';
@@ -24,6 +26,7 @@ class RouteNames {
 
 class RouteConfig {
   static final Map<String, WidgetBuilder> routes = <String, WidgetBuilder>{
+    RouteNames.readerPage: (BuildContext context) => DemoReader(),
     RouteNames.constrainedBoxPage: (BuildContext context) => DemoConstrainedBox(),
     RouteNames.inheritedWidgetPage: (BuildContext context) => DemoInheritedWidget(),
     RouteNames.customProviderPage: (BuildContext context) => CartWidget(),
