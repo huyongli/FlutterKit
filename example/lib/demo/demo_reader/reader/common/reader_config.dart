@@ -6,6 +6,7 @@ class ReaderConfig {
   static const String offsetEnd = 'end';
 
   MediaQueryData _mediaQuery;
+  double titleMargin = 10;
 
   ReaderConfig._internal() {
     _mediaQuery = MediaQueryData.fromWindow(ui.window);
@@ -17,6 +18,7 @@ class ReaderConfig {
 
   EdgeInsetsGeometry _padding;
   double _fontSize;
+  double _titleFontSize;
 
   EdgeInsetsGeometry get padding {
     return _padding ?? EdgeInsets.only(
@@ -39,11 +41,23 @@ class ReaderConfig {
     this._fontSize = fontSize;
   }
 
+  double get titleFontSize {
+    return _titleFontSize ?? 16;
+  }
+
+  set titleFontSize(double fontSize) {
+    this._titleFontSize = fontSize;
+  }
+
   double get _safeTopHeight => _mediaQuery.padding.top;
 
   double get _safeBottomHeight => _mediaQuery.padding.bottom;
 
-  double get height => _mediaQuery.size.height - padding.vertical;
+  double get screenHeight => _mediaQuery.size.height;
 
-  double get width => _mediaQuery.size.width - padding.horizontal;
+  double get screenWidth => _mediaQuery.size.width;
+
+  double get contentWidth => screenWidth - padding.horizontal;
+
+  double get contentHeight => screenHeight - padding.vertical - titleMargin;
 }

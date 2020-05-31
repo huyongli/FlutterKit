@@ -1,4 +1,5 @@
-import 'package:laohu_kit/widget/reader/factory/factorys.dart';
+
+import 'package:example/demo/demo_reader/reader/factory/factorys.dart';
 
 class Article extends IArticle {
   int id;
@@ -25,4 +26,7 @@ class Article extends IArticle {
 
   @override
   String getContent() => content;
+
+  @override
+  String getId() => id.toString();
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:laohu_kit/widget/reader/viewmodel/reader_viewmodel.dart';
+
+import 'viewmodel/reader_viewmodel.dart';
 
 class ReaderProvider extends InheritedWidget {
   final ReaderViewModel viewModel;

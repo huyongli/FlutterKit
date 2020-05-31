@@ -1,6 +1,7 @@
-import 'package:example/demo/demo_reader/reader_viewmodel.dart';
+import 'package:example/demo/demo_reader/demo_reader_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:laohu_kit/widget/reader/reader_widget.dart';
+
+import 'reader/reader_widget.dart';
 
 class DemoReader extends StatefulWidget {
 
@@ -18,6 +19,7 @@ class _DemoReaderState extends State<DemoReader> {
   @override
   Widget build(BuildContext context) {
     return ReaderWidget(
+      textStyle: TextStyle(fontSize: 20),
       builder: () => ReaderFactory(),
       background: Image.asset('assets/images/read_bg.png', fit: BoxFit.cover),
     );

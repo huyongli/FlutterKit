@@ -1,3 +1,4 @@
+import 'package:example/demo/demo_reader/reader/factory/factorys.dart';
 import 'package:flutter/material.dart';
 
 import 'reader_config.dart';
@@ -9,14 +10,21 @@ class ReaderPageAgent {
   
   static ReaderPageAgent get instance => _instance;
 
-  double get pageWidth => ReaderConfig.instance.width;
-  double get pageHeight => ReaderConfig.instance.height;
+  double get pageWidth => ReaderConfig.instance.contentWidth;
+  double get pageHeight => ReaderConfig.instance.contentHeight - titleHeight ?? pageTitleSize;
   double get pageFontSize => ReaderConfig.instance.fontSize;
+  double get pageTitleSize => ReaderConfig.instance.titleFontSize;
 
   int maxLines;
+  double titleHeight;
 
-  List<Map<String, int>> getPageOffsets(String content) {
+  List<Map<String, int>> getPageOffsets(IArticle article) {
+    String content = article.getContent();
+
     TextPainter textPainter = TextPainter(textDirection: TextDirection.ltr);
+
+    _tryMeasureTitleHeight(article.getTitle(), textPainter);
+
     _measurePageMaxLinesIfNeed(content, textPainter);
 
     String tmp = content;
@@ -66,5 +74,15 @@ class ReaderPageAgent {
     }
     String nextText = tmp.substring(0, range.start);
     return _getPageOffset(nextText, textPainter, maxLines);
+  }
+
+  void _tryMeasureTitleHeight(String title, TextPainter textPainter) {
+    if (titleHeight != null) {
+      return;
+    }
+    textPainter.text = TextSpan(text: title, style: TextStyle(fontSize: pageTitleSize));
+    textPainter.layout(maxWidth: pageWidth);
+    var lines = textPainter.computeLineMetrics();
+    titleHeight = lines != null && lines.isNotEmpty ? lines[0].height : pageTitleSize;
   }
 }
