@@ -25,7 +25,7 @@ class PageWidget extends StatelessWidget {
           Text.rich(
             TextSpan(children: [
               TextSpan(
-                text: page.article.getPageText(page.index),
+                text: page.article.getPageText(page.index).trimRight(),
                 style: TextStyle(fontSize: ReaderConfig.instance.fontSize)
               )
             ]),
