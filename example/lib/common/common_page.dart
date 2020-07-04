@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CommonPage {
-  static Widget builder({String title, @required Widget child}) {
+  static Widget builder({@required String title, @required Widget child}) {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),

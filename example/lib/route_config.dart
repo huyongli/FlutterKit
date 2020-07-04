@@ -3,6 +3,7 @@ import 'package:example/demo/demo_http/demo_http.dart';
 import 'package:example/demo/demo_icon_text.dart';
 import 'package:example/demo/demo_keyboard.dart';
 import 'package:example/demo/demo_reader/demo_reader.dart';
+import 'package:example/demo/demo_textpainter.dart';
 import 'package:flutter/widgets.dart';
 
 import 'demo/demo_animated_switcher.dart';
@@ -24,6 +25,7 @@ class RouteNames {
   static const String httpPage = 'Http';
   static const String iconTextPage = 'IconText';
   static const String keyboard = 'Keyboard';
+  static const String textPainter = 'TextPainter';
 }
 
 class RouteConfig {
@@ -39,5 +41,6 @@ class RouteConfig {
     RouteNames.httpPage: (BuildContext context) => DemoHttp(),
     RouteNames.iconTextPage: (BuildContext context) => DemoIconText(),
     RouteNames.keyboard: (BuildContext context) => DemoKeyBoard(),
+    RouteNames.textPainter: (BuildContext context) => DemoTextPainter(),
   };
 }
