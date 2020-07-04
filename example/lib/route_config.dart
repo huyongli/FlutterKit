@@ -1,6 +1,7 @@
 import 'package:example/demo/demo_expansion_widget.dart';
 import 'package:example/demo/demo_http/demo_http.dart';
 import 'package:example/demo/demo_icon_text.dart';
+import 'package:example/demo/demo_keyboard.dart';
 import 'package:example/demo/demo_reader/demo_reader.dart';
 import 'package:flutter/widgets.dart';
 
@@ -22,6 +23,7 @@ class RouteNames {
   static const String expansionPage = 'ExpansionWidget';
   static const String httpPage = 'Http';
   static const String iconTextPage = 'IconText';
+  static const String keyboard = 'Keyboard';
 }
 
 class RouteConfig {
@@ -36,5 +38,6 @@ class RouteConfig {
     RouteNames.expansionPage: (BuildContext context) => DemoExpansionWidget(),
     RouteNames.httpPage: (BuildContext context) => DemoHttp(),
     RouteNames.iconTextPage: (BuildContext context) => DemoIconText(),
+    RouteNames.keyboard: (BuildContext context) => DemoKeyBoard(),
   };
 }

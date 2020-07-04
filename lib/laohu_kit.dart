@@ -26,6 +26,8 @@ export 'util/text_util.dart';
 export 'util/type_util.dart';
 export 'util/screen_util.dart';
 export 'util/regex_util.dart';
+export 'util/ui_util.dart';
+export 'util/text_measure_util.dart';
 
 export 'widget/expansion_widget.dart';
 export 'widget/icon_text.dart';

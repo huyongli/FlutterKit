@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 class Stack<E> {
   final List<E> _stack;
 
