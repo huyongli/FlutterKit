@@ -2,6 +2,7 @@ import 'package:example/demo/demo_expansion_widget.dart';
 import 'package:example/demo/demo_http/demo_http.dart';
 import 'package:example/demo/demo_icon_text.dart';
 import 'package:example/demo/demo_keyboard.dart';
+import 'package:example/demo/demo_page/demo_page.dart';
 import 'package:example/demo/demo_reader/demo_reader.dart';
 import 'package:example/demo/demo_textpainter.dart';
 import 'package:flutter/widgets.dart';
@@ -26,6 +27,7 @@ class RouteNames {
   static const String iconTextPage = 'IconText';
   static const String keyboard = 'Keyboard';
   static const String textPainter = 'TextPainter';
+  static const String page = '仿真翻页';
 }
 
 class RouteConfig {
@@ -42,5 +44,6 @@ class RouteConfig {
     RouteNames.iconTextPage: (BuildContext context) => DemoIconText(),
     RouteNames.keyboard: (BuildContext context) => DemoKeyBoard(),
     RouteNames.textPainter: (BuildContext context) => DemoTextPainter(),
+    RouteNames.page: (BuildContext context) => DemoPage(),
   };
 }
