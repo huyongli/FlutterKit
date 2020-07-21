@@ -1,23 +1,9 @@
-import 'dart:developer' show log;
 import 'dart:math' show pow;
 
 import 'package:flutter/painting.dart';
 
+import 'draw_delegate.dart';
 import 'page_painter.dart';
-
-enum TouchArea {
-  TOUCH_TOP_RIGHT,
-  TOUCH_BOTTOM_RIGHT
-}
-
-extension PointExt on Point {
-  TouchArea getTouchArea(Size size) {
-    if (this.y <= size.height / 2) {
-      return TouchArea.TOUCH_TOP_RIGHT;
-    }
-    return TouchArea.TOUCH_BOTTOM_RIGHT;
-  }
-}
 
 class SimulationPathManager {
   final Path _path = Path();
@@ -40,13 +26,30 @@ class SimulationPathManager {
 
   bool get isSimulationPath => !(touchPoint?.isNull ?? true);
 
-  void calculate(Point touchPoint, Size size) {
-    _touchArea = touchPoint.getTouchArea(size);
+  TouchArea calculate(Point touchPoint, Size size) {
+    TouchArea touchArea = touchPoint.getTouchArea(size, this.touchArea);
+    bool isOver = isOverMaxX(touchPoint, size, touchArea);
+
+    if (isOver) {
+      if (this.touchPoint == null) {
+        touchArea = TouchArea.TOUCH_BOTTOM_RIGHT;
+        calculateInternal(Point(x: size.width, y: size.height) - Point(x: 50, y: 50), size, touchArea);
+      } else {
+        calculateInternal(this.touchPoint, size, touchArea);
+      }
+    } else {
+      calculateInternal(touchPoint, size, touchArea);
+    }
+    return touchArea;
+  }
+
+  void calculateInternal(Point touchPoint, Size size, TouchArea touchArea) {
+    _touchArea = touchArea;
     switch (touchArea) {
       case TouchArea.TOUCH_TOP_RIGHT:
         _fp = Point(x: size.width, y: 0);
         break;
-      case TouchArea.TOUCH_BOTTOM_RIGHT:
+      default:
         _fp = Point(x: size.width, y: size.height);
         break;
     }
@@ -84,15 +87,13 @@ class SimulationPathManager {
       ..y = ((_jp.y + _kp.y) / 2 + _hp.y) / 2;
   }
 
-  Point calculatePointC(Point touchPoint, Size size) {
-    TouchArea touchArea = touchPoint.getTouchArea(size);
-
+  bool isOverMaxX(Point touchPoint, Size size, TouchArea touchArea) {
     Point fp;
     switch (touchArea) {
       case TouchArea.TOUCH_TOP_RIGHT:
         fp = Point(x: size.width, y: 0);
         break;
-      case TouchArea.TOUCH_BOTTOM_RIGHT:
+      default:
         fp = Point(x: size.width, y: size.height);
         break;
     }
@@ -109,7 +110,7 @@ class SimulationPathManager {
     Point cp = Point()
       ..x = ep.x - (fp.x - ep.x) / 2
       ..y = fp.y;
-    return cp;
+    return cp.x < 0;
   }
 
   Point getIntersectionPoint(Line l1, Line l2) {
@@ -132,7 +133,7 @@ class SimulationPathManager {
 
   Path getPathAFromBottomRight(Size size) {
     if (!this.isSimulationPath) {
-      return getCanvasPath(size);
+      return getCanvasDefaultPath(size);
     }
     _path
       ..reset()
@@ -148,7 +149,7 @@ class SimulationPathManager {
     return _path;
   }
 
-  Path getCanvasPath(Size size) {
+  Path getCanvasDefaultPath(Size size) {
     _path
       ..reset()
       ..moveTo(0, 0)

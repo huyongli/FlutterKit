@@ -1,4 +1,6 @@
-import 'package:example/demo/demo_page/simulation_path_manager.dart';
+import 'dart:developer';
+
+import 'package:example/demo/demo_page/draw_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -11,57 +13,27 @@ import 'package:flutter/widgets.dart';
 /// x=(b2-b1)/(a1-a2), y=a1*x+b1
 /// 将x表达式代入y表达式中可得：y=((a1*b2-a1*b1) + (a1*b1-a2*b1))/(a1-a2)=(a1*b2-a2*b1)/(a1-a2)
 class PagePainter extends CustomPainter {
-  final Point _touchPoint;
   final Paint _drawPaint = Paint()
     ..isAntiAlias = true
     ..style = PaintingStyle.fill;
-  final SimulationPathManager _pathManager;
+  final DrawDelegate drawDelegate;
 
-  PagePainter({SimulationPathManager pathManager})
-      : _touchPoint = pathManager.touchPoint?.clone(),
-        _pathManager = pathManager,
-        super();
+  PagePainter({this.drawDelegate}) : super();
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (_pathManager.isSimulationPath) {
-      drawPathB(canvas, size);
-      drawPathC(canvas, size);
-    }
-    drawPathAFromBottomRight(canvas, size);
-  }
-
-  void drawPathB(Canvas canvas, Size size) {
-    canvas.save();
-    _drawPaint
-      ..color = Colors.blue
-      ..blendMode = BlendMode.srcOver;
-    var pathB = _pathManager.getPathB(size);
-    canvas.drawPath(pathB, _drawPaint);
-    canvas.restore();
-  }
-
-  void drawPathC(Canvas canvas, Size size) {
-    canvas.save();
-    _drawPaint..color = Colors.yellow;
-    var pathC = _pathManager.getPathC();
-    canvas.drawPath(pathC, _drawPaint);
-    canvas.restore();
-  }
-
-  void drawPathAFromBottomRight(Canvas canvas, Size size) {
-    canvas.save();
-    _drawPaint
-      ..color = Colors.green
-      ..blendMode = BlendMode.src;
-    var pathA = _pathManager.getPathAFromBottomRight(size);
-    canvas.drawPath(pathA, _drawPaint);
-    canvas.restore();
+    drawDelegate.draw(canvas, _drawPaint, size);
   }
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
-    return oldDelegate is PagePainter && oldDelegate._touchPoint != _touchPoint;
+    if (oldDelegate is PagePainter) {
+      if (oldDelegate.drawDelegate == drawDelegate) {
+        return oldDelegate.drawDelegate.touchPoint != drawDelegate.touchPoint;
+      }
+      return true;
+    }
+    return false;
   }
 }
 
