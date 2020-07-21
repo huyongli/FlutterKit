@@ -1,4 +1,4 @@
-import 'dart:math' show pow;
+import 'dart:math' show pow, sqrt;
 
 import 'package:flutter/painting.dart';
 
@@ -29,17 +29,10 @@ class SimulationPathManager {
   TouchArea calculate(Point touchPoint, Size size) {
     TouchArea touchArea = touchPoint.getTouchArea(size, this.touchArea);
     bool isOver = isOverMaxX(touchPoint, size, touchArea);
-
-    if (isOver) {
-      if (this.touchPoint == null) {
-        touchArea = TouchArea.TOUCH_BOTTOM_RIGHT;
-        calculateInternal(Point(x: size.width, y: size.height) - Point(x: 50, y: 50), size, touchArea);
-      } else {
-        calculateInternal(this.touchPoint, size, touchArea);
-      }
-    } else {
-      calculateInternal(touchPoint, size, touchArea);
-    }
+    Point base = isOver
+        ? (this.touchPoint == null ? Point(x: size.width, y: size.height) - Point(x: 50, y: 50) : this.touchPoint)
+        : touchPoint;
+    calculateInternal(base, size, touchArea);
     return touchArea;
   }
 
@@ -113,6 +106,7 @@ class SimulationPathManager {
     return cp.x < 0;
   }
 
+  /// 计算两条线段的相交点坐标
   Point getIntersectionPoint(Line l1, Line l2) {
     if (l1.p1.x == l1.p2.x) {
       return Point(x: l1.p1.x, y: (l1.p1.y + l1.p2.y) / 2);
@@ -131,24 +125,75 @@ class SimulationPathManager {
     return Point(x: x, y: y);
   }
 
-  Path getPathAFromBottomRight(Size size) {
-    if (!this.isSimulationPath) {
-      return getCanvasDefaultPath(size);
-    }
+  Path getPathAFromTopRight(Size size) {
     _path
       ..reset()
+
+      ///移动到左上角
       ..moveTo(0, 0)
-      ..lineTo(0, size.height)
+
+      /// 移动到C点
       ..lineTo(_cp.x, _cp.y)
+
+      /// 从C点到B点画贝赛尔曲线，控制点为E点
       ..quadraticBezierTo(_ep.x, _ep.y, _bp.x, _bp.y)
+
+      /// 移动到A点
       ..lineTo(_ap.x, _ap.y)
+
+      /// 移动到K点
       ..lineTo(_kp.x, _kp.y)
+
+      /// 从K点到J点画贝赛尔曲线，控制点为H点
       ..quadraticBezierTo(_hp.x, _hp.y, _jp.x, _jp.y)
-      ..lineTo(size.width, 0)
+
+      /// 移动到右下角
+      ..lineTo(size.width, size.height)
+
+      /// 移动到左下角
+      ..lineTo(0, size.height)
+
+      /// 闭合区域
       ..close();
     return _path;
   }
 
+  /// 获取触摸点在右下角的A区域
+  Path getPathAFromBottomRight(Size size) {
+    _path
+      ..reset()
+
+      /// 移动到左上角
+      ..moveTo(0, 0)
+
+      /// 移动到左下角
+      ..lineTo(0, size.height)
+
+      /// 移动到C点
+      ..lineTo(_cp.x, _cp.y)
+
+      /// 从C点到B点画贝赛尔曲线，控制点为E点
+      ..quadraticBezierTo(_ep.x, _ep.y, _bp.x, _bp.y)
+
+      /// 移动到A点
+      ..lineTo(_ap.x, _ap.y)
+
+      /// 移动到K点
+      ..lineTo(_kp.x, _kp.y)
+
+      /// 从K点到J点画贝赛尔曲线，控制点为H点
+      ..quadraticBezierTo(_hp.x, _hp.y, _jp.x, _jp.y)
+
+      /// 移动到右上角
+      ..lineTo(size.width, 0)
+
+      /// 闭合区域
+      ..close();
+
+    return _path;
+  }
+
+  /// 画布默认区域
   Path getCanvasDefaultPath(Size size) {
     _path
       ..reset()

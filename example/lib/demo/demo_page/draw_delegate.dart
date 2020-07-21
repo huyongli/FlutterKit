@@ -72,11 +72,9 @@ class TouchBottomRightDrawDelegate extends DrawDelegate {
 
   @override
   void draw(Canvas canvas, Paint paint, Size size) {
-    if (pathManager.isSimulationPath) {
-      drawPathB(canvas, paint, size);
-      drawPathC(canvas, paint, size);
-    }
-    drawPathAFromBottomRight(canvas, paint, size);
+    drawPathB(canvas, paint, size);
+    drawPathC(canvas, paint, size);
+    drawPathA(canvas, paint, size);
   }
 
   void drawPathB(Canvas canvas, Paint paint, Size size) {
@@ -97,7 +95,7 @@ class TouchBottomRightDrawDelegate extends DrawDelegate {
     canvas.restore();
   }
 
-  void drawPathAFromBottomRight(Canvas canvas, Paint paint, Size size) {
+  void drawPathA(Canvas canvas, Paint paint, Size size) {
     canvas.save();
     paint
       ..color = Colors.green
@@ -113,11 +111,9 @@ class TouchTopRightDrawDelegate extends DrawDelegate {
 
   @override
   void draw(Canvas canvas, Paint paint, Size size) {
-    if (pathManager.isSimulationPath) {
-      drawPathB(canvas, paint, size);
-      drawPathC(canvas, paint, size);
-    }
-    drawPathAFromBottomRight(canvas, paint, size);
+    drawPathB(canvas, paint, size);
+    drawPathC(canvas, paint, size);
+    drawPathA(canvas, paint, size);
   }
 
   void drawPathB(Canvas canvas, Paint paint, Size size) {
@@ -138,12 +134,12 @@ class TouchTopRightDrawDelegate extends DrawDelegate {
     canvas.restore();
   }
 
-  void drawPathAFromBottomRight(Canvas canvas, Paint paint, Size size) {
+  void drawPathA(Canvas canvas, Paint paint, Size size) {
     canvas.save();
     paint
-      ..color = Colors.green
-      ..blendMode = BlendMode.src;
-    var pathA = pathManager.getPathAFromBottomRight(size);
+      ..blendMode = BlendMode.src
+      ..color = Colors.green;
+    var pathA = pathManager.getPathAFromTopRight(size);
     canvas.drawPath(pathA, paint);
     canvas.restore();
   }
