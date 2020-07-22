@@ -59,9 +59,11 @@ class Point {
 
   bool get isNull => x == null || y == null;
 
-  Point operator +(Point other) => Point(x: x + other.x, y: y + other.y);
+  Point operator +(Point other) => other == null ? this : Point(x: x + other.x, y: y + other.y);
 
-  Point operator -(Point other) => Point(x: x - other.x, y: y - other.y);
+  Point operator -(Point other) => other == null ? this : Point(x: x - other.x, y: y - other.y);
+
+  Point operator *(double value) => Point(x: x * value, y: y * value);
 
   Point clone() => Point(x: x, y: y);
 

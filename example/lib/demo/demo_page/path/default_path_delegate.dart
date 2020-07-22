@@ -13,4 +13,9 @@ class DefaultPathDelegate extends PathDelegate {
   Point getDefaultFPoint(Size size) {
     return Point(x: size.width, y: size.height);
   }
+
+  @override
+  Point getOverMaxXTouchPoint(Size size) {
+    return Point(x: size.width, y: size.height);
+  }
 }

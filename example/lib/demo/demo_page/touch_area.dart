@@ -6,6 +6,12 @@ import 'path/default_path_delegate.dart';
 import 'path/path_delegate.dart';
 import 'path/path_manager.dart';
 
+enum TouchAction {
+  ActionDown,
+  ActionMove,
+  ActionUp
+}
+
 enum TouchArea {
   TOUCH_TOP_RIGHT,
   TOUCH_BOTTOM_RIGHT,

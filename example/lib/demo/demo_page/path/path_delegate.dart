@@ -30,6 +30,20 @@ abstract class PathDelegate extends IPathDelegate {
 
   Point get touchPoint => _ap;
 
+  void restore() {
+    _ap = null;
+    _fp = null;
+    _gp = null;
+    _ep = null;
+    _hp = null;
+    _cp = null;
+    _jp = null;
+    _bp = null;
+    _kp = null;
+    _dp = null;
+    _ip = null;
+  }
+
   Point getDefaultFPoint(Size size);
 
   void calculate(Point touchPoint, Size size) {
@@ -67,6 +81,8 @@ abstract class PathDelegate extends IPathDelegate {
       ..x = ((_jp.x + _kp.x) / 2 + _hp.x) / 2
       ..y = ((_jp.y + _kp.y) / 2 + _hp.y) / 2;
   }
+
+  Point getOverMaxXTouchPoint(Size size);
 
   bool isOverMaxX(Point touchPoint, Size size) {
     Point fp = getDefaultFPoint(size);
@@ -185,6 +201,11 @@ class BottomRightPathDelegate extends PathDelegate {
   Point getDefaultFPoint(Size size) {
     return Point(x: size.width, y: size.height);
   }
+
+  @override
+  Point getOverMaxXTouchPoint(Size size) {
+    return getDefaultFPoint(size) - Point(x: 50, y: 50);
+  }
 }
 
 class TopRightPathDelegate extends PathDelegate {
@@ -226,5 +247,10 @@ class TopRightPathDelegate extends PathDelegate {
   @override
   Point getDefaultFPoint(Size size) {
     return Point(x: size.width, y: 0);
+  }
+
+  @override
+  Point getOverMaxXTouchPoint(Size size) {
+    return getDefaultFPoint(size) - Point(x: 50, y: -50);
   }
 }

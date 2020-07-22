@@ -12,26 +12,32 @@ class PathManager extends IPathDelegate {
   TouchArea _touchArea;
 
   TouchArea get touchArea => _touchArea;
+  
+  set touchArea(TouchArea touchArea) {
+    this._touchArea = touchArea;
+    _currentPathDelegate = touchArea.createPathCalculator();
+  }
 
   Point get touchPoint => _currentPathDelegate.touchPoint;
 
-  PathDelegate _getPathCalculator(TouchArea touchArea) {
-    assert(touchArea != null);
-    if (_cachePathDelegate[touchArea] == null) {
-      _cachePathDelegate[touchArea] = touchArea.createPathCalculator();
-    }
-    return _cachePathDelegate[touchArea];
+  void setTouchAreaByTouchPoint(Point touchPoint, Size size) {
+    this.touchArea = touchPoint.getTouchArea(size, this.touchArea);
   }
 
-  TouchArea calculate(Point touchPoint, Size size) {
-    _touchArea = touchPoint.getTouchArea(size, this.touchArea);
-    _currentPathDelegate = _getPathCalculator(touchArea);
+  void restoreDefault() {
+    this.touchArea = TouchArea.TOUCH_NONE;
+    this._currentPathDelegate.restore();
+  }
+
+  void calculate(Point touchPoint, Size size) {
+    if (touchArea == TouchArea.TOUCH_NONE) {
+      return;
+    }
     bool isOver = _currentPathDelegate.isOverMaxX(touchPoint, size);
     Point base = isOver
-        ? (this.touchPoint == null ? Point(x: size.width, y: size.height) - Point(x: 50, y: 50) : this.touchPoint)
+        ? (this.touchPoint == null ? _currentPathDelegate.getOverMaxXTouchPoint(size) : this.touchPoint)
         : touchPoint;
     _currentPathDelegate.calculate(base, size);
-    return touchArea;
   }
 
   @override
@@ -52,5 +58,9 @@ class PathManager extends IPathDelegate {
   @override
   Path getDefaultPath(Size size) {
     return _currentPathDelegate.getDefaultPath(size);
+  }
+
+  Point getDefaultFPoint(Size size) {
+    return _currentPathDelegate.getDefaultFPoint(size);
   }
 }
