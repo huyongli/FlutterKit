@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:example/demo/demo_page/draw_delegate.dart';
 import 'package:example/demo/demo_page/page_painter.dart';
 import 'package:flutter/material.dart';

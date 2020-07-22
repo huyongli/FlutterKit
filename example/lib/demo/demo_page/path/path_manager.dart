@@ -2,11 +2,9 @@ import 'package:flutter/painting.dart';
 
 import '../page_painter.dart';
 import '../touch_area.dart';
-import 'default_path_delegate.dart';
 import 'path_delegate.dart';
 
 class PathManager extends IPathDelegate {
-  Map<TouchArea, PathDelegate> _cachePathDelegate = {};
   PathDelegate _currentPathDelegate = DefaultPathDelegate();
 
   TouchArea _touchArea;
@@ -26,7 +24,6 @@ class PathManager extends IPathDelegate {
 
   void restoreDefault() {
     this.touchArea = TouchArea.TOUCH_NONE;
-    this._currentPathDelegate.restore();
   }
 
   void calculate(Point touchPoint, Size size) {
