@@ -25,7 +25,7 @@ class _DemoPageState extends State<DemoPage> with SingleTickerProviderStateMixin
   void initState() {
     super.initState();
     currentDrawDelegate = TouchArea.TOUCH_NONE.createDelegate(pathManager);
-    _controller = AnimationController(duration: Duration(milliseconds: 500), vsync: this);
+    _controller = AnimationController(duration: Duration(milliseconds: 400), vsync: this);
   }
 
   @override
@@ -59,48 +59,52 @@ class _DemoPageState extends State<DemoPage> with SingleTickerProviderStateMixin
     switch (action) {
       case TouchAction.ActionDown:
         pathManager.setTouchAreaByTouchPoint(touchPoint, size);
-        setCurrentTouchPoint(touchPoint, size);
+        setCurrentTouchPoint(touchPoint, size, true);
         break;
       case TouchAction.ActionMove:
-        setCurrentTouchPoint(touchPoint, size);
+        setCurrentTouchPoint(touchPoint, size, true);
         break;
       case TouchAction.ActionUp:
-        cancelAnimation(size);
+        startAnimation(size);
         break;
     }
   }
 
-  void setCurrentTouchPoint(Point touchPoint, Size size) {
+  void setCurrentTouchPoint(Point touchPoint, Size size, bool isTouched) {
     Point diff = touchPoint - pathManager.touchPoint;
     if (!(diff.x.abs() >= 0.1 || diff.y.abs() >= 0.1)) {
       return;
     }
-    pathManager.calculate(touchPoint, size);
+    pathManager.calculate(touchPoint, size, isTouched);
     setState(() {
       currentDrawDelegate = pathManager.touchArea.createDelegate(pathManager);
     });
   }
 
-  void cancelAnimation(Size size) {
+  void startAnimation(Size size, {bool isRestore = false}) {
     var begin = pathManager.touchPoint;
     if (begin == null) {
       return;
     }
     _controller.reset();
-    var end = pathManager.getDefaultFPoint(size);
-    _animation =
-        Tween<Point>(begin: begin, end: end).animate(CurvedAnimation(parent: _controller, curve: Interval(0, 1)))
-          ..addListener(() {
-            if (end == _animation.value) {
-              pathManager.restoreDefault();
-            }
-            setCurrentTouchPoint(_animation.value, size);
-          })
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              _isAnimating = false;
-            }
-          });
+    var end = isRestore ? pathManager.getCancelAnimationEndPoint(size) : pathManager.getStartAnimationEndPoint(size);
+    _animation = Tween<Point>(begin: begin, end: end).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Interval(0, 1),
+      ),
+    )
+      ..addListener(() {
+        setCurrentTouchPoint(_animation.value, size, false);
+        if (end == _animation.value) {
+          pathManager.restoreDefault();
+        }
+      })
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          _isAnimating = false;
+        }
+      });
     _isAnimating = true;
     _controller.forward();
   }

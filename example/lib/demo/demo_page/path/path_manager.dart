@@ -26,12 +26,12 @@ class PathManager extends IPathDelegate {
     this.touchArea = TouchArea.TOUCH_NONE;
   }
 
-  void calculate(Point touchPoint, Size size) {
+  void calculate(Point touchPoint, Size size, bool isTouched) {
     if (touchArea == TouchArea.TOUCH_NONE) {
       return;
     }
     bool isOver = _currentPathDelegate.isOverMaxX(touchPoint, size);
-    Point base = isOver
+    Point base = isTouched && isOver
         ? (this.touchPoint == null ? _currentPathDelegate.getOverMaxXTouchPoint(size) : this.touchPoint)
         : touchPoint;
     _currentPathDelegate.calculate(base, size);
@@ -57,7 +57,13 @@ class PathManager extends IPathDelegate {
     return _currentPathDelegate.getDefaultPath(size);
   }
 
-  Point getDefaultFPoint(Size size) {
-    return _currentPathDelegate.getDefaultFPoint(size);
+  @override
+  Point getCancelAnimationEndPoint(Size size) {
+    return _currentPathDelegate.getCancelAnimationEndPoint(size);
+  }
+
+  @override
+  Point getStartAnimationEndPoint(Size size) {
+    return _currentPathDelegate.getStartAnimationEndPoint(size);
   }
 }

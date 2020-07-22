@@ -12,6 +12,10 @@ abstract class IPathDelegate {
   Path getPathB(Size size);
 
   Path getPathC(Size size);
+
+  Point getCancelAnimationEndPoint(Size size);
+
+  Point getStartAnimationEndPoint(Size size);
 }
 
 abstract class PathDelegate extends IPathDelegate {
@@ -143,6 +147,16 @@ abstract class PathDelegate extends IPathDelegate {
       ..lineTo(size.width, 0)
       ..close();
     return _path;
+  }
+
+  @override
+  Point getCancelAnimationEndPoint(Size size) {
+    return getDefaultFPoint(size);
+  }
+
+  @override
+  Point getStartAnimationEndPoint(Size size) {
+    return getDefaultFPoint(size) - Point(x: size.width + touchPoint.x, y: 0);
   }
 }
 

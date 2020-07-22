@@ -2,7 +2,6 @@ import 'package:flutter/painting.dart';
 
 import 'draw_delegate.dart';
 import 'page_painter.dart';
-import 'path/default_path_delegate.dart';
 import 'path/path_delegate.dart';
 import 'path/path_manager.dart';
 
