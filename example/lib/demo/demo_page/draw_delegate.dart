@@ -20,8 +20,8 @@ class DefaultDrawDelegate extends DrawDelegate {
   @override
   void draw(Canvas canvas, Paint paint, Size size) {
     canvas.save();
-    paint..color = Colors.green;
-    var defaultPath = pathManager.getDefaultPath(size);
+    paint..color = pathManager.color.curPageBgColor;
+    var defaultPath = pathManager.getCurrentPagePath(size);
     canvas.drawPath(defaultPath, paint);
     canvas.restore();
   }
@@ -32,36 +32,39 @@ class TouchDrawDelegate extends DrawDelegate {
 
   @override
   void draw(Canvas canvas, Paint paint, Size size) {
-    drawPathB(canvas, paint, size);
-    drawPathC(canvas, paint, size);
-    drawPathA(canvas, paint, size);
+    if (pathManager.touchPoint == null) {
+      return;
+    }
+    drawNextPagePath(canvas, paint, size);
+    drawCurrentPageBackSidePath(canvas, paint, size);
+    drawCurrentPagePath(canvas, paint, size);
   }
 
-  void drawPathB(Canvas canvas, Paint paint, Size size) {
+  void drawNextPagePath(Canvas canvas, Paint paint, Size size) {
     canvas.save();
     paint
-      ..color = Colors.blue
+      ..color = pathManager.color.nextPageBgColor
       ..blendMode = BlendMode.srcOver;
-    var pathB = pathManager.getPathB(size);
-    canvas.drawPath(pathB, paint);
+    var path = pathManager.getNextPagePath(size);
+    canvas.drawPath(path, paint);
     canvas.restore();
   }
 
-  void drawPathC(Canvas canvas, Paint paint, Size size) {
+  void drawCurrentPageBackSidePath(Canvas canvas, Paint paint, Size size) {
     canvas.save();
-    paint..color = Colors.yellow;
-    var pathC = pathManager.getPathC(size);
-    canvas.drawPath(pathC, paint);
+    paint..color = pathManager.color.curPageBackSideBgColor;
+    var path = pathManager.getCurrentPageBackSidePath(size);
+    canvas.drawPath(path, paint);
     canvas.restore();
   }
 
-  void drawPathA(Canvas canvas, Paint paint, Size size) {
+  void drawCurrentPagePath(Canvas canvas, Paint paint, Size size) {
     canvas.save();
     paint
-      ..color = Colors.green
+      ..color = pathManager.color.curPageBgColor
       ..blendMode = BlendMode.src;
-    var pathA = pathManager.getPathA(size);
-    canvas.drawPath(pathA, paint);
+    var path = pathManager.getCurrentPagePath(size);
+    canvas.drawPath(path, paint);
     canvas.restore();
   }
 }

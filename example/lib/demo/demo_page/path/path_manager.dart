@@ -1,10 +1,24 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
 import '../page_painter.dart';
 import '../touch_area.dart';
 import 'path_delegate.dart';
 
+class PathColor {
+  final Color curPageBgColor;
+  final Color nextPageBgColor;
+  final Color curPageBackSideBgColor;
+
+  PathColor({
+    this.curPageBgColor = Colors.green,
+    this.nextPageBgColor = Colors.blue,
+    this.curPageBackSideBgColor = Colors.yellow,
+  });
+}
+
 class PathManager extends IPathDelegate {
+  PathColor color;
   PathDelegate _currentPathDelegate = DefaultPathDelegate();
 
   TouchArea _touchArea;
@@ -17,6 +31,8 @@ class PathManager extends IPathDelegate {
   }
 
   Point get touchPoint => _currentPathDelegate.touchPoint;
+
+  PathManager({@required this.color}): assert(color != null);
 
   void setTouchAreaByTouchPoint(Point touchPoint, Size size) {
     this.touchArea = touchPoint.getTouchArea(size, this.touchArea);
@@ -38,23 +54,18 @@ class PathManager extends IPathDelegate {
   }
 
   @override
-  Path getPathA(Size size) {
-    return _currentPathDelegate.getPathA(size);
+  Path getCurrentPagePath(Size size) {
+    return _currentPathDelegate.getCurrentPagePath(size);
   }
 
   @override
-  Path getPathB(Size size) {
-    return _currentPathDelegate.getPathB(size);
+  Path getNextPagePath(Size size) {
+    return _currentPathDelegate.getNextPagePath(size);
   }
 
   @override
-  Path getPathC(Size size) {
-    return _currentPathDelegate.getPathC(size);
-  }
-
-  @override
-  Path getDefaultPath(Size size) {
-    return _currentPathDelegate.getDefaultPath(size);
+  Path getCurrentPageBackSidePath(Size size) {
+    return _currentPathDelegate.getCurrentPageBackSidePath(size);
   }
 
   @override

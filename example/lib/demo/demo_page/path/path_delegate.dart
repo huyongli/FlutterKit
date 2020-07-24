@@ -5,16 +5,19 @@ import 'package:flutter/painting.dart';
 import '../page_painter.dart';
 
 abstract class IPathDelegate {
-  Path getDefaultPath(Size size);
+  /// 当前页面路径
+  Path getCurrentPagePath(Size size);
 
-  Path getPathA(Size size);
+  /// 翻页过程中下一页的路径
+  Path getNextPagePath(Size size);
 
-  Path getPathB(Size size);
+  /// 仿真翻页过程中当前页的背面路径
+  Path getCurrentPageBackSidePath(Size size);
 
-  Path getPathC(Size size);
-
+  /// 取消仿真翻页动画结束点坐标
   Point getCancelAnimationEndPoint(Size size);
 
+  /// 自动完成仿真翻页动画的结束点坐标
   Point getStartAnimationEndPoint(Size size);
 }
 
@@ -111,21 +114,8 @@ abstract class PathDelegate extends IPathDelegate {
     return Point(x: x, y: y);
   }
 
-  /// 画布默认区域
   @override
-  Path getDefaultPath(Size size) {
-    _path
-      ..reset()
-      ..moveTo(0, 0)
-      ..lineTo(0, size.height)
-      ..lineTo(size.width, size.height)
-      ..lineTo(size.width, 0)
-      ..close();
-    return _path;
-  }
-
-  @override
-  Path getPathC(Size size) {
+  Path getCurrentPageBackSidePath(Size size) {
     _path
       ..reset()
       ..moveTo(_ip.x, _ip.y)
@@ -138,7 +128,7 @@ abstract class PathDelegate extends IPathDelegate {
   }
 
   @override
-  Path getPathB(Size size) {
+  Path getNextPagePath(Size size) {
     _path
       ..reset()
       ..moveTo(0, 0)
@@ -163,7 +153,7 @@ abstract class PathDelegate extends IPathDelegate {
 class BottomRightPathDelegate extends PathDelegate {
 
   @override
-  Path getPathA(Size size) {
+  Path getCurrentPagePath(Size size) {
     _path
       ..reset()
 
@@ -211,7 +201,7 @@ class BottomRightPathDelegate extends PathDelegate {
 class TopRightPathDelegate extends PathDelegate {
 
   @override
-  Path getPathA(Size size) {
+  Path getCurrentPagePath(Size size) {
     _path
       ..reset()
 
@@ -257,8 +247,8 @@ class TopRightPathDelegate extends PathDelegate {
 
 class DefaultPathDelegate extends PathDelegate {
   @override
-  Path getPathA(Size size) {
-    return null;
+  Path getCurrentPagePath(Size size) {
+    return getNextPagePath(size);
   }
 
   @override

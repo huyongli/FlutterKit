@@ -18,7 +18,7 @@ class _DemoPageState extends State<DemoPage> with SingleTickerProviderStateMixin
   Animation<Point> _animation;
   bool _isAnimating = false;
 
-  final PathManager pathManager = PathManager();
+  final PathManager pathManager = PathManager(color: PathColor());
   DrawDelegate currentDrawDelegate;
 
   @override
@@ -76,6 +76,10 @@ class _DemoPageState extends State<DemoPage> with SingleTickerProviderStateMixin
       return;
     }
     pathManager.calculate(touchPoint, size, isTouched);
+    refresh();
+  }
+
+  void refresh() {
     setState(() {
       currentDrawDelegate = pathManager.touchArea.createDelegate(pathManager);
     });
@@ -103,6 +107,7 @@ class _DemoPageState extends State<DemoPage> with SingleTickerProviderStateMixin
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           _isAnimating = false;
+          refresh();
         }
       });
     _isAnimating = true;
