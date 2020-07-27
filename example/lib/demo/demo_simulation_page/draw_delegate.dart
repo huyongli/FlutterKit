@@ -24,6 +24,7 @@ class DefaultDrawDelegate extends DrawDelegate {
     var defaultPath = pathManager.getCurrentPagePath(size);
     canvas.drawPath(defaultPath, paint);
     canvas.restore();
+    canvas.drawPicture(pathManager.contents[0].picture);
   }
 }
 
@@ -65,6 +66,7 @@ class TouchDrawDelegate extends DrawDelegate {
       ..blendMode = BlendMode.src;
     var path = pathManager.getCurrentPagePath(size);
     canvas.drawPath(path, paint);
+    canvas.drawPicture(pathManager.contents[0].picture);
     canvas.restore();
   }
 }

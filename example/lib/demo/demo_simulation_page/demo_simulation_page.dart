@@ -1,5 +1,6 @@
 import 'package:example/demo/demo_simulation_page/demo_simulation_viewmodel.dart';
 import 'package:example/demo/demo_simulation_page/draw_delegate.dart';
+import 'package:example/demo/demo_simulation_page/page_entity.dart';
 import 'package:example/demo/demo_simulation_page/page_painter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -29,26 +30,43 @@ class _DemoSimulationPageState extends State<DemoSimulationPage> with SingleTick
     super.initState();
     currentDrawDelegate = TouchArea.TOUCH_NONE.createDelegate(pathManager);
     _controller = AnimationController(duration: Duration(milliseconds: 400), vsync: this);
+    viewModel.fetchArticle(ScreenUtil.getDefaultMediaQuery().size);
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      child: Listener(
-        onPointerDown: (event) {
-          onTouch(event, TouchAction.ActionDown);
+      child: StreamBuilder<List<PageCanvasEntity>>(
+        stream: viewModel.contents,
+        builder: (context, snapshot) {
+          List<PageCanvasEntity> list = snapshot.data ?? [];
+          if (list.isEmpty) {
+            return Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.orange.withAlpha(33),
+                valueColor: AlwaysStoppedAnimation(Colors.orange),
+                strokeWidth: 5,
+              ),
+            );
+          }
+          pathManager.contents = list;
+          return Listener(
+            onPointerDown: (event) {
+              onTouch(event, TouchAction.ActionDown);
+            },
+            onPointerMove: (event) {
+              onTouch(event, TouchAction.ActionMove);
+            },
+            onPointerUp: (event) {
+              onTouch(event, TouchAction.ActionUp);
+            },
+            child: CustomPaint(
+              painter: PagePainter(drawDelegate: currentDrawDelegate),
+              size: ScreenUtil.getDefaultMediaQuery().size,
+            ),
+          );
         },
-        onPointerMove: (event) {
-          onTouch(event, TouchAction.ActionMove);
-        },
-        onPointerUp: (event) {
-          onTouch(event, TouchAction.ActionUp);
-        },
-        child: CustomPaint(
-          painter: PagePainter(drawDelegate: currentDrawDelegate),
-          size: ScreenUtil.getDefaultMediaQuery().size,
-        ),
       ),
     );
   }

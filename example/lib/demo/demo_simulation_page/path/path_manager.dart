@@ -1,3 +1,4 @@
+import 'package:example/demo/demo_simulation_page/page_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
@@ -19,6 +20,8 @@ class PathColor {
 
 class PathManager extends IPathDelegate {
   PathColor color;
+  List<PageCanvasEntity> contents;
+
   PathDelegate _currentPathDelegate = DefaultPathDelegate();
 
   TouchArea _touchArea;
