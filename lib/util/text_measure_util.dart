@@ -16,7 +16,9 @@ class TextMeasureResult {
 
   /// 当前测量限定条件下展示时所占用的高度
   double get height => painter.height;
+
   double get width => painter.width;
+
   /// 展示完所有文本所需要的实际高度
   double get measureHeight => (lineHeight ?? 0) * (lines ?? 0);
 
@@ -53,10 +55,11 @@ class TextMeasureConstraint {
 class TextMeasureUtil {
   static TextPainter _layoutText(String text, TextMeasureConstraint constraint) {
     TextPainter textPainter = TextPainter(
-        textDirection: constraint.textDirection,
-        textScaleFactor: constraint.textScaleFactor,
-        maxLines: constraint.maxLines,
-        ellipsis: constraint.ellipsis);
+      textDirection: constraint.textDirection,
+      textScaleFactor: constraint.textScaleFactor,
+      maxLines: constraint.maxLines,
+      ellipsis: constraint.ellipsis,
+    );
     textPainter.text = TextSpan(text: text, style: TextStyle(fontSize: constraint.textFontSize));
     textPainter.layout(maxWidth: constraint.width);
     return textPainter;

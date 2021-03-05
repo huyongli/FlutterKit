@@ -11,13 +11,14 @@ class ApiExecutor {
     Map<String, dynamic> headers = await api.headers.buildHeaders(params ?? {});
 
     Request request = Request(
-        domain: domain,
-        path: path,
-        method: api.method,
-        headers: headers,
-        params: params,
-        connectTimeout: api.connectTimeout,
-        readTimeout: api.readTimeout);
+      domain: domain,
+      path: path,
+      method: api.method,
+      headers: headers,
+      params: params,
+      connectTimeout: api.connectTimeout,
+      readTimeout: api.readTimeout,
+    );
 
     api.key = request.toString();
     _cacheApi[api.key] = api;

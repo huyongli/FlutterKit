@@ -1,7 +1,1 @@
-enum RequestMethod {
-  POST,
-  GET,
-  PUT,
-  DELETE,
-  PATCH
-}
+enum RequestMethod { POST, GET, PUT, DELETE, PATCH }

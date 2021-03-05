@@ -10,8 +10,8 @@ class RequestException extends Error {
 
   RequestException({this.code, this.message, this.httpCode});
 
-  RequestException.newDefault():
-        code = RequestExceptionCodes.unknownCode,
+  RequestException.newDefault()
+      : code = RequestExceptionCodes.unknownCode,
         message = '未知错误',
         httpCode = RequestExceptionCodes.unknownHttpCode;
 

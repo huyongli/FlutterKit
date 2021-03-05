@@ -16,7 +16,7 @@ class CircleColorWidget extends StatelessWidget {
       height: radius * 2,
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.all(Radius.circular(radius))
+        borderRadius: BorderRadius.all(Radius.circular(radius)),
       ),
     );
   }

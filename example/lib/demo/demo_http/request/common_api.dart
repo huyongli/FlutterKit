@@ -5,16 +5,14 @@ import 'package:laohu_kit/request/factory/impl/default_request_header_factory.da
 import 'package:laohu_kit/request/factory/impl/default_request_param_factory.dart';
 import 'package:laohu_kit/request/factory/impl/default_response_factory.dart';
 import 'package:laohu_kit/request/factory/url_factory.dart';
-import 'package:laohu_kit/request/request_method.dart';
 
 import 'mock_client.dart';
 
 class CommonApi extends Api {
-  CommonApi({@required String path, method: RequestMethod.GET}): super(
-    method: method,
+  CommonApi({@required String path, Map params}): super(
     domain: DefaultMockDomainFactory(),
     path: DefaultPathFactory(path),
-    params: DefaultRequestParamFactory(),
+    params: DefaultRequestParamFactory(params: params),
     headers: DefaultRequestHeaderFactory(),
     response: DefaultResponseFactory(),
     client: MockClient()

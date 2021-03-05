@@ -29,7 +29,7 @@ mixin PageStateWidgetProviding {
             firstChild: otherWidget,
             secondChild: successWidget,
             crossFadeState: state is SuccessState ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-            duration: DurationConstants.normalAnimation
+            duration: Durations.normal
           );
         } else {
           return state is SuccessState ? successWidget : otherWidget;
@@ -75,7 +75,7 @@ mixin PageStateWidgetProviding {
                 firstChild: otherWidget,
                 secondChild: successWidget,
                 crossFadeState: state is SuccessState ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-                duration: DurationConstants.normalAnimation
+                duration: Durations.normal
             );
           } else {
             return state is SuccessState ? successWidget : otherWidget;

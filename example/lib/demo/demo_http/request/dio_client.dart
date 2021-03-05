@@ -18,40 +18,52 @@ class DioClient extends RequestClient {
         Response response;
         switch (request.method) {
           case RequestMethod.POST:
-            response = await _dio.post(request.url,
-                data: request.params,
-                cancelToken: _token,
-                options: RequestOptions(
-                    headers: request.headers,
-                    connectTimeout: request.connectTimeout,
-                    receiveTimeout: request.readTimeout));
+            response = await _dio.post(
+              request.url,
+              data: request.params,
+              cancelToken: _token,
+              options: RequestOptions(
+                headers: request.headers,
+                connectTimeout: request.connectTimeout,
+                receiveTimeout: request.readTimeout,
+              ),
+            );
             break;
           case RequestMethod.GET:
-            response = await _dio.get(request.url,
-                queryParameters: request.params,
-                cancelToken: _token,
-                options: RequestOptions(
-                    headers: request.headers,
-                    connectTimeout: request.connectTimeout,
-                    receiveTimeout: request.readTimeout));
+            response = await _dio.get(
+              request.url,
+              queryParameters: request.params,
+              cancelToken: _token,
+              options: RequestOptions(
+                headers: request.headers,
+                connectTimeout: request.connectTimeout,
+                receiveTimeout: request.readTimeout,
+              ),
+            );
             break;
           case RequestMethod.PATCH:
-            response = await _dio.patch(request.url,
-                data: request.params,
-                cancelToken: _token,
-                options: RequestOptions(
-                    headers: request.headers,
-                    connectTimeout: request.connectTimeout,
-                    receiveTimeout: request.readTimeout));
+            response = await _dio.patch(
+              request.url,
+              data: request.params,
+              cancelToken: _token,
+              options: RequestOptions(
+                headers: request.headers,
+                connectTimeout: request.connectTimeout,
+                receiveTimeout: request.readTimeout,
+              ),
+            );
             break;
           case RequestMethod.DELETE:
-            response = await _dio.delete(request.url,
-                data: request.params,
-                cancelToken: _token,
-                options: RequestOptions(
-                    headers: request.headers,
-                    connectTimeout: request.connectTimeout,
-                    receiveTimeout: request.readTimeout));
+            response = await _dio.delete(
+              request.url,
+              data: request.params,
+              cancelToken: _token,
+              options: RequestOptions(
+                headers: request.headers,
+                connectTimeout: request.connectTimeout,
+                receiveTimeout: request.readTimeout,
+              ),
+            );
             break;
           default:
             break;

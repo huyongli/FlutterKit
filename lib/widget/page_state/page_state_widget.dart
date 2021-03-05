@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'page_state.dart';
 
 class PageStateWidget extends StatelessWidget {
-
   PageStateWidget({
     Key key,
     this.pageState,
@@ -11,8 +10,8 @@ class PageStateWidget extends StatelessWidget {
     this.emptyWidget,
     this.errorWidget,
     this.networkErrorWidget,
-    this.onReload
-  }): super(key: key);
+    this.onReload,
+  }) : super(key: key);
 
   final PageState pageState;
   final Function onReload;
@@ -20,7 +19,6 @@ class PageStateWidget extends StatelessWidget {
   final Widget emptyWidget;
   final Widget errorWidget;
   final Widget networkErrorWidget;
-
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +37,10 @@ class PageStateWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (pageState is NetworkErrorState || pageState is ErrorState) {
-          if (onReload != null) onReload();
+          onReload?.call();
         }
       },
-      child: Container(
-        alignment: Alignment.center,
-        width: double.infinity,
-        child: child,
-      ),
+      child: Container(alignment: Alignment.center, width: double.infinity, child: child),
     );
   }
 }

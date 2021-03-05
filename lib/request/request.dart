@@ -6,8 +6,8 @@ class Request {
   final RequestMethod method;
   final Map<String, dynamic> headers;
   final Map<String, dynamic> params;
-  final int connectTimeout;// milliseconds
-  final int readTimeout;// milliseconds
+  final int connectTimeout; // milliseconds
+  final int readTimeout; // milliseconds
 
   String get url {
     bool domainSlash = domain.endsWith('/');
@@ -27,7 +27,7 @@ class Request {
     this.headers,
     this.params,
     this.connectTimeout,
-    this.readTimeout
+    this.readTimeout,
   });
 
   @override

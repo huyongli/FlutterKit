@@ -19,8 +19,7 @@ class ErrorState extends PageState {
 }
 
 class NetworkErrorState extends ErrorState {
-
-  NetworkErrorState({String message = 'network error'}): super(message: message);
+  NetworkErrorState({String message = 'network error'}) : super(message: message);
 }
 
 class SuccessState<Model> extends PageState {

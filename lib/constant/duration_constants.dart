@@ -1,5 +1,5 @@
-class DurationConstants {
-  static const Duration superFastAnimation = Duration(milliseconds: 100);
-  static const Duration fastAnimation = Duration(milliseconds: 200);
-  static const Duration normalAnimation = Duration(milliseconds: 300);
+class Durations {
+  static const Duration superFast = Duration(milliseconds: 100);
+  static const Duration fast = Duration(milliseconds: 200);
+  static const Duration normal = Duration(milliseconds: 300);
 }

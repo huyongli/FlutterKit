@@ -1,4 +1,4 @@
-class RegexConstants {
+class Regexs {
   /// regex of digit text
   static const String REGEX_DIGIT = r"^\d{1,}$";
 

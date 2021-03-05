@@ -5,8 +5,7 @@ class DefaultPathFactory extends PathFactory {
   DefaultPathFactory(String path) : super(path);
 
   @override
-  Future<String> newPath(
-      Map<String, dynamic> params, RequestMethod method) async {
+  Future<String> newPath(Map<String, dynamic> params, RequestMethod method) async {
     String newPath = path;
     List<String> pathKeys = [];
     params?.forEach((key, value) {

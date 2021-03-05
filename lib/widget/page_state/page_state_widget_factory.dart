@@ -16,37 +16,25 @@ class PageStateWidgetFactory {
     Widget emptyWidget,
     Widget Function(String) loadingErrorBuilder,
     Widget Function(String) networkErrorBuilder,
-    Function onReload
+    Function onReload,
   }) {
     loadingBuilder = (state) {
-      return loadingWidget ?? PageStateWidget(
-        pageState: state,
-        loadingWidget: CircularProgressIndicator(),
-      );
+      return loadingWidget ?? PageStateWidget(pageState: state, loadingWidget: CircularProgressIndicator());
     };
     emptyBuilder = (state) {
-      return emptyWidget ?? PageStateWidget(
-        pageState: state,
-        loadingWidget: Text('Empty'),
-      );
+      return emptyWidget ?? PageStateWidget(pageState: state, loadingWidget: Text('Empty'));
     };
     errorBuilder = (state) {
       if (loadingErrorBuilder != null) {
         return loadingErrorBuilder(state.message);
       }
-      return PageStateWidget(
-        pageState: state,
-        loadingWidget: Text('Request Error'),
-      );
+      return PageStateWidget(pageState: state, loadingWidget: Text('Request Error'));
     };
     this.networkErrorBuilder = (state) {
       if (networkErrorBuilder != null) {
         return networkErrorBuilder(state.message);
       }
-      return PageStateWidget(
-        pageState: state,
-        loadingWidget: Text('Network Error'),
-      );
+      return PageStateWidget(pageState: state, loadingWidget: Text('Network Error'));
     };
   }
 

@@ -9,6 +9,7 @@ import 'factory/url_factory.dart';
 import 'request_method.dart';
 
 const int _timeOut = 30000;
+
 class Api {
   final DomainFactory domain;
   final PathFactory path;
@@ -16,9 +17,11 @@ class Api {
   final RequestHeaderFactory headers;
   final ResponseFactory response;
   final RequestClient client;
-  final int connectTimeout;// milliseconds
-  final int readTimeout;// milliseconds
-  final RequestMethod method;
+  final int connectTimeout; // milliseconds
+  final int readTimeout; // milliseconds
+  RequestMethod _method;
+
+  RequestMethod get method => _method;
 
   ApiExecutor _apiExecutor = ApiExecutor();
 
@@ -32,20 +35,39 @@ class Api {
     @required this.headers,
     @required this.response,
     @required this.client,
-    @required this.method,
     this.connectTimeout = _timeOut,
-    this.readTimeout = _timeOut
-  }): assert(domain != null),
-      assert(path != null),
-      assert(params != null),
-      assert(headers != null),
-      assert(response != null),
-      assert(client != null),
-      assert(method != null),
-      assert(connectTimeout > 0),
-      assert(readTimeout > 0);
-  
-  Future<dynamic> execute() async {
+    this.readTimeout = _timeOut,
+  })  : assert(domain != null),
+        assert(path != null),
+        assert(params != null),
+        assert(headers != null),
+        assert(response != null),
+        assert(client != null),
+        assert(connectTimeout > 0),
+        assert(readTimeout > 0);
+
+  Future<dynamic> get() async {
+    _method = RequestMethod.GET;
+    return await _apiExecutor.execute(this);
+  }
+
+  Future<dynamic> post() async {
+    _method = RequestMethod.POST;
+    return await _apiExecutor.execute(this);
+  }
+
+  Future<dynamic> delete() async {
+    _method = RequestMethod.DELETE;
+    return await _apiExecutor.execute(this);
+  }
+
+  Future<dynamic> patch() async {
+    _method = RequestMethod.PATCH;
+    return await _apiExecutor.execute(this);
+  }
+
+  Future<dynamic> put() async {
+    _method = RequestMethod.PUT;
     return await _apiExecutor.execute(this);
   }
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class IconText extends StatelessWidget {
-
   const IconText({
     Key key,
     @required this.icon,
@@ -9,11 +8,11 @@ class IconText extends StatelessWidget {
     this.direction = AxisDirection.up,
     this.padding,
     this.space,
-    this.onPressed
-  }): assert(icon != null),
-      assert(text != null),
-      assert(direction != null),
-      super(key: key);
+    this.onPressed,
+  })  : assert(icon != null),
+        assert(text != null),
+        assert(direction != null),
+        super(key: key);
 
   final Widget icon;
 
@@ -33,29 +32,25 @@ class IconText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        if (this.onPressed != null) {
-          this.onPressed();
-        }
-      },
-      child: Container(
-        padding: padding,
-        child: _isVertical ? Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: _buildIconText()
-        ) : Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: _buildIconText()
-        )
-      ),
-    );
+    Widget child = _isVertical
+        ? Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: _buildIconText())
+        : Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: _buildIconText());
+
+    if (padding != null) {
+      child = Container(padding: padding, child: child);
+    }
+
+    return InkWell(onTap: () => this.onPressed?.call(), child: child);
   }
-  
+
   List<Widget> _buildIconText() {
     List<Widget> list;
     switch (direction) {

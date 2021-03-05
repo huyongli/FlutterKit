@@ -44,14 +44,14 @@ class _DemoHttpState extends State<DemoHttp> {
   }
 
   void requestList() async {
-    List<dynamic> response = await CommonApi(path: 'list').execute();
+    List<dynamic> response = await CommonApi(path: 'list').get();
     setState(() {
       result = response.toString();
     });
   }
 
   void requestMap() async {
-    Map<String, dynamic> response =  await CommonApi(path: 'map').execute();
+    Map<String, dynamic> response =  await CommonApi(path: 'map').get();
     setState(() {
       result = response.toString();
     });

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ExpansionWidget extends StatefulWidget {
-
   const ExpansionWidget({
     Key key,
     @required this.fixedWidget,
@@ -10,14 +9,14 @@ class ExpansionWidget extends StatefulWidget {
     this.childrenCrossAxisAlignment = CrossAxisAlignment.center,
     this.childrenMainAxisAlignment = MainAxisAlignment.start,
     this.initiallyExpanded = false,
-    this.onExpansionChanged
-  }): assert(fixedWidget != null),
-      assert(fixedWidgetDirection != null),
-      assert(childrenCrossAxisAlignment != null),
-      assert(childrenMainAxisAlignment != null),
-      assert(children != null),
-      assert(initiallyExpanded != null),
-      super(key: key);
+    this.onExpansionChanged,
+  })  : assert(fixedWidget != null),
+        assert(fixedWidgetDirection != null),
+        assert(childrenCrossAxisAlignment != null),
+        assert(childrenMainAxisAlignment != null),
+        assert(children != null),
+        assert(initiallyExpanded != null),
+        super(key: key);
 
   /// fix widget direction by the children
   final AxisDirection fixedWidgetDirection;
@@ -36,24 +35,21 @@ class ExpansionWidget extends StatefulWidget {
 
   /// Called when the tile expands or collapses.
   final ValueChanged<bool> onExpansionChanged;
-  
+
   final bool initiallyExpanded;
 
   @override
-  _ExpansionWidgetState createState() =>
-      _ExpansionWidgetState();
+  _ExpansionWidgetState createState() => _ExpansionWidgetState();
 }
 
-class _ExpansionWidgetState
-    extends State<ExpansionWidget>
-    with SingleTickerProviderStateMixin {
+class _ExpansionWidgetState extends State<ExpansionWidget> with SingleTickerProviderStateMixin {
   static final Animatable<double> _easeInTween = CurveTween(curve: Curves.easeIn);
 
   AnimationController _controller;
   Animation<double> _sizeFactor;
 
-  bool get isVerticalDirection => widget.fixedWidgetDirection == AxisDirection.up ||
-                                  widget.fixedWidgetDirection == AxisDirection.down;
+  bool get isVerticalDirection =>
+      widget.fixedWidgetDirection == AxisDirection.up || widget.fixedWidgetDirection == AxisDirection.down;
 
   bool _isExpanded = false;
 
@@ -65,8 +61,7 @@ class _ExpansionWidgetState
 
     _isExpanded = PageStorage.of(context)?.readState(context) as bool ?? widget.initiallyExpanded;
 
-    if (_isExpanded)
-      _controller.value = 1.0;
+    if (_isExpanded) _controller.value = 1.0;
   }
 
   @override
@@ -82,8 +77,7 @@ class _ExpansionWidgetState
         _controller.forward();
       } else {
         _controller.reverse().then<void>((void value) {
-          if (!mounted)
-            return;
+          if (!mounted) return;
           setState(() {
             // Rebuild without widget.children.
           });
@@ -91,8 +85,7 @@ class _ExpansionWidgetState
       }
       PageStorage.of(context)?.writeState(context, _isExpanded);
     });
-    if (widget.onExpansionChanged != null)
-      widget.onExpansionChanged(_isExpanded);
+    if (widget.onExpansionChanged != null) widget.onExpansionChanged(_isExpanded);
   }
 
   Widget _buildFixedWidget(BuildContext context, Widget child) {
@@ -108,37 +101,28 @@ class _ExpansionWidgetState
         break;
     }
     return Container(
-      child: isVerticalDirection ?
-             Column(
-               mainAxisSize: MainAxisSize.min,
-               children: children
-             ) :
-             Row(
-               mainAxisSize: MainAxisSize.min,
-               children: children
-             ),
+      child: isVerticalDirection
+          ? Column(mainAxisSize: MainAxisSize.min, children: children)
+          : Row(mainAxisSize: MainAxisSize.min, children: children),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final bool closed = !_isExpanded && _controller.isDismissed;
-    Widget expansionChild = isVerticalDirection ?
-                            Column(
-                              children: widget.children,
-                              crossAxisAlignment: widget.childrenCrossAxisAlignment,
-                              mainAxisAlignment: widget.childrenMainAxisAlignment
-                            ):
-                            Row(
-                              children: widget.children,
-                              crossAxisAlignment: widget.childrenCrossAxisAlignment,
-                              mainAxisAlignment: widget.childrenMainAxisAlignment
-                            );
+    Widget expansionChild = isVerticalDirection
+        ? Column(
+            children: widget.children,
+            crossAxisAlignment: widget.childrenCrossAxisAlignment,
+            mainAxisAlignment: widget.childrenMainAxisAlignment,
+          )
+        : Row(
+            children: widget.children,
+            crossAxisAlignment: widget.childrenCrossAxisAlignment,
+            mainAxisAlignment: widget.childrenMainAxisAlignment,
+          );
     return AnimatedBuilder(
-      animation: _controller.view,
-      builder: _buildFixedWidget,
-      child: closed ? null : expansionChild
-    );
+        animation: _controller.view, builder: _buildFixedWidget, child: closed ? null : expansionChild);
   }
 
   List<Widget> _buildFixedWidgetChildren(Widget child) {
