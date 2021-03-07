@@ -6,8 +6,8 @@ class IconText extends StatelessWidget {
     @required this.icon,
     @required this.text,
     this.direction = AxisDirection.up,
-    this.padding,
-    this.space,
+    this.padding = EdgeInsets.zero,
+    this.space = 0,
     this.onPressed,
   })  : assert(icon != null),
         assert(text != null),
@@ -47,8 +47,11 @@ class IconText extends StatelessWidget {
     if (padding != null) {
       child = Container(padding: padding, child: child);
     }
-
-    return InkWell(onTap: () => this.onPressed?.call(), child: child);
+    if (onPressed != null) {
+      return InkWell(onTap: () => this.onPressed?.call(), child: child);
+    } else {
+      return child;
+    }
   }
 
   List<Widget> _buildIconText() {
