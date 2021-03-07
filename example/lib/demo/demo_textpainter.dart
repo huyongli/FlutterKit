@@ -4,44 +4,61 @@ import 'package:flutter/widgets.dart';
 import 'package:laohu_kit/util/text_measure_util.dart';
 
 class DemoTextPainter extends StatelessWidget {
-  final String text =
-      '7月1日国务院新闻办举行的新闻发布会上，国务院港澳事务办公室副主任张晓明表示：一法可安香江。香港国安法是继香港基本法之后，中央为香港特别行政区专门制定的第二部重要法律。他把香港国安法比喻为香港繁荣稳定的“守护神”和“定海神针”。';
-  final double height = 100;
-  final double width = 200;
+  final String text = '7月1日国务院新闻办举行的新闻发布会上';
+  final double height = 40;
+  final double width = 100;
   final double space = 10;
 
   @override
   Widget build(BuildContext context) {
     var textStyle = Theme.of(context).textTheme.bodyText1;
-    var constraint = TextMeasureConstraint(textFontSize: textStyle.fontSize, width: width, maxLines: 5);
-    var result = TextMeasureUtil.measure(text, constraint);
+    var span = TextSpan(text: text, style: textStyle);
+    int maxLines = 2;
+    TextMeasurer measure = TextMeasurer(text: span, maxLines: maxLines, maxWidth: width);
+    measure.measure();
+    Offset offset = Offset(measure.textRect.width, measure.textRect.height);
     return CommonPage.builder(
-        title: 'Demo TextPainter',
-        child: Center(
-            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-          Container(
+      title: 'Demo TextPainter',
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
               width: width,
               color: Colors.blueAccent,
               child: Text(text, style: textStyle),
-              margin: EdgeInsets.only(bottom: space)),
-          Container(
-              padding: EdgeInsets.symmetric(vertical: 5),
+              margin: EdgeInsets.only(bottom: space),
+            ),
+            Container(
               width: width,
+              height: height,
+              color: Colors.blueAccent,
+              child: Text(text, style: textStyle),
+              margin: EdgeInsets.only(bottom: space),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               color: Colors.blueAccent,
               child: Text(
-                  '限制文本最大显示行数：5\n'
-                  '文本实际行数：${result.lines}\n'
-                  '测量行高：${result.lineHeight}\n'
-                  '测量实际所需高度：${result.measureHeight}\n'
-                  'exceedMaxLines: ${result.didExceedMaxLines}\n'
-                  '当前展示文本范围索引: ${result.getPositionForOffset(Offset(result.painter.width, result.painter.height))}\n'
-                  '显示的最后一行的索引范围: ${result.getLineBoundary(TextPosition(offset: result.getPositionForOffset(Offset(result.painter.width, result.painter.height))))}\n'
-                  '测量当前尺寸：${result.painter.size}\n'
-                  '测量当前宽度：${result.painter.width}\n'
-                  '测量当前高度：${result.painter.height}',
-                  style: textStyle),
-              margin: EdgeInsets.only(bottom: space)),
-          Container(width: width, height: height, color: Colors.blueAccent, child: Text(text, style: textStyle))
-        ])));
+                '限制文本最大显示行数：$maxLines\n\n'
+                '文本实际需要展示行数：${measure.lines}\n'
+                '测量文本行高：${measure.lineHeight}\n'
+                '全部展示完整所需高度：${measure.allLayoutHeight}\n'
+                '是否超出最大展示行数: ${measure.didExceedMaxLines}\n\n'
+                '当前展示文本范围索引: ${measure.getTextPositionForOffset(offset)}\n\n'
+                '显示的最后一行的索引范围: ${measure.getLineBoundary(TextPosition(offset: measure.getTextPositionForOffset(offset).offset))}\n\n'
+                'getOffsetBefore: ${measure.getOffsetBefore(measure.getTextPositionForOffset(offset).offset)}\n'
+                'getOffsetAfter: ${measure.getOffsetAfter(measure.getTextPositionForOffset(offset).offset)}\n\n'
+                'getPositionBefore: ${measure.getPositionBefore(offset)}\n'
+                'getPositionAfter: ${measure.getPositionAfter(offset)}\n\n'
+                '当前限制条件下展示所需的尺寸：${measure.textRect}\n',
+                style: textStyle,
+              ),
+              margin: EdgeInsets.only(bottom: space, left: 20, right: 20),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
