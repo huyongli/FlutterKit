@@ -1,4 +1,5 @@
-import 'package:example/demo/demo_expansion_widget.dart';
+import 'package:example/demo/demo_expandable_text.dart';
+import 'package:example/demo/demo_expandable_widget.dart';
 import 'package:example/demo/demo_http/demo_http.dart';
 import 'package:example/demo/demo_icon_text.dart';
 import 'package:example/demo/demo_keyboard.dart';
@@ -20,13 +21,14 @@ class RouteNames {
   static const String inheritedWidgetPage = 'InheritedWidget';
   static const String customProviderPage = 'CustomProvider';
   static const String heroPage = 'Hero';
-  static const String staggerAnimationPage = 'StaggerAnimation';
+  static const String staggerAnimationPage = '交织动画';
   static const String animatedSwitcherPage = 'AnimatedSwitcherAnimation';
-  static const String expansionPage = 'ExpansionWidget';
+  static const String expansionPage = 'ExpandableWidget';
   static const String httpPage = 'Http';
   static const String iconTextPage = 'IconText';
   static const String keyboard = 'Keyboard';
-  static const String textPainter = 'TextPainter';
+  static const String textPainter = '文本测量';
+  static const String expandCollapsePage = '文本展开收起';
   static const String simulationPage = '仿真翻页';
 }
 
@@ -39,11 +41,12 @@ class RouteConfig {
     RouteNames.heroPage: (BuildContext context) => HeroAnimationRoute(),
     RouteNames.staggerAnimationPage: (BuildContext context) => StaggerAnimationPage(),
     RouteNames.animatedSwitcherPage: (BuildContext context) => DemoAnimatedSwitcher(),
-    RouteNames.expansionPage: (BuildContext context) => DemoExpansionWidget(),
+    RouteNames.expansionPage: (BuildContext context) => DemoExpandableWidget(),
     RouteNames.httpPage: (BuildContext context) => DemoHttp(),
     RouteNames.iconTextPage: (BuildContext context) => DemoIconText(),
     RouteNames.keyboard: (BuildContext context) => DemoKeyBoard(),
     RouteNames.textPainter: (BuildContext context) => DemoTextPainter(),
     RouteNames.simulationPage: (BuildContext context) => DemoSimulationPage(),
+    RouteNames.expandCollapsePage: (BuildContext context) => DemoExpandableText(),
   };
 }

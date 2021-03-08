@@ -1,8 +1,8 @@
 import 'package:example/common/common_page.dart';
 import 'package:flutter/material.dart';
-import 'package:laohu_kit/widget/expansion_widget.dart';
+import 'package:laohu_kit/widget/expandable_widget.dart';
 
-class DemoExpansionWidget extends StatelessWidget {
+class DemoExpandableWidget extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class DemoExpansionWidget extends StatelessWidget {
   }
   
   Widget _buildFixedUpExpansionWidget(BuildContext context) {
-    return ExpansionWidget(
+    return ExpandableWidget(
       fixedWidget: Container(
         alignment: Alignment.center,
         width: double.infinity,
@@ -57,7 +57,7 @@ class DemoExpansionWidget extends StatelessWidget {
   }
 
   Widget _buildFixedDownExpansionWidget(BuildContext context) {
-    return ExpansionWidget(
+    return ExpandableWidget(
       fixedWidget: Container(
         alignment: Alignment.center,
         width: double.infinity,
@@ -88,7 +88,7 @@ class DemoExpansionWidget extends StatelessWidget {
   }
 
   Widget _buildFixedLeftExpansionWidget(BuildContext context) {
-    return ExpansionWidget(
+    return ExpandableWidget(
       fixedWidget: Container(
         alignment: Alignment.center,
         color: Colors.red,
@@ -118,7 +118,7 @@ class DemoExpansionWidget extends StatelessWidget {
   }
 
   Widget _buildFixedRightExpansionWidget(BuildContext context) {
-    return ExpansionWidget(
+    return ExpandableWidget(
       fixedWidget: Container(
         alignment: Alignment.center,
         color: Colors.lightGreen,

@@ -33,31 +33,38 @@ class ExpandableText extends StatefulWidget {
   final Widget collapseIcon;
 
   /// 显示图标时，图标的size
+  /// 如果不想要展开收起图标，则可以将此值设置为0
   final double iconSize;
 
   /// 展开收起的监听
   /// 不需要展示展开收起时，不会响应
   final Function(bool) onExpandChanged;
 
-  const ExpandableText({
+  ExpandableText({
     Key key,
     this.text,
     this.expandText = '展开',
     this.collapseText = '收起',
     this.style,
-    this.linkColor = Colors.black,
     this.maxLines = 5,
     this.expanded = false,
-    this.expandIcon = const Icon(Icons.keyboard_arrow_down, size: _defaultIconSize, color: Colors.black),
-    this.collapseIcon = const Icon(Icons.keyboard_arrow_up, size: _defaultIconSize, color: Colors.black),
-    this.iconSize = _defaultIconSize,
+    Color linkColor = Colors.black,
+    Widget expandIcon,
+    Widget collapseIcon,
+    double iconSize,
     this.onExpandChanged,
   })  : assert(text != null && text.length != 0),
         assert(style != null),
         assert(linkColor != null),
         assert(expanded != null),
+        assert(expandText != null && expandText.isNotEmpty),
+        assert(collapseText != null && collapseText.isNotEmpty),
         assert((expandIcon != null && collapseIcon != null && iconSize != null) ||
-            (expandIcon == null && collapseIcon == null && iconSize == null)),
+            (expandIcon == null && collapseIcon == null)),
+        linkColor = linkColor,
+        expandIcon = expandIcon ?? Icon(Icons.keyboard_arrow_down, size: _defaultIconSize, color: linkColor),
+        collapseIcon = expandIcon ?? Icon(Icons.keyboard_arrow_up, size: _defaultIconSize, color: linkColor),
+        iconSize = iconSize ?? _defaultIconSize,
         super(key: key);
 
   @override
@@ -66,6 +73,9 @@ class ExpandableText extends StatefulWidget {
 
 class _ExpandableTextState extends State<ExpandableText> {
   bool _expanded = false;
+  double _animateHeight;
+  double _expandHeight = 0;
+  double _collapseHeight = 0;
   TapGestureRecognizer _tapGestureRecognizer;
 
   @override
@@ -76,6 +86,7 @@ class _ExpandableTextState extends State<ExpandableText> {
       ..onTap = () {
         setState(() {
           _expanded = !_expanded;
+          _animateHeight = _expanded ? _expandHeight :  _collapseHeight;
           widget.onExpandChanged?.call(_expanded);
         });
       };
@@ -120,6 +131,11 @@ class _ExpandableTextState extends State<ExpandableText> {
 
       var pixOffset = Offset(textSize.width - expandSize.width - widget.iconSize ?? 0, textSize.height);
       int endPosition = measurer.getPositionBefore(pixOffset);
+      _expandHeight = measurer.allLayoutHeight;
+      _collapseHeight = measurer.textRect.height;
+      if (_animateHeight == null) {
+        _animateHeight = _expanded ? _expandHeight : _collapseHeight;
+      }
 
       TextSpan textSpan;
       if (measurer.didExceedMaxLines) {
@@ -130,7 +146,7 @@ class _ExpandableTextState extends State<ExpandableText> {
             style: widget.style.copyWith(color: widget.linkColor),
             recognizer: _tapGestureRecognizer,
           ),
-          if (widget.expandIcon != null)
+          if (widget.expandIcon != null && widget.iconSize != 0)
             WidgetSpan(
               child: GestureDetector(
                 behavior: HitTestBehavior.translucent,
@@ -143,7 +159,11 @@ class _ExpandableTextState extends State<ExpandableText> {
       } else {
         textSpan = TextSpan(text: widget.text, style: widget.style);
       }
-      return Text.rich(textSpan);
+      return AnimatedContainer(
+        duration: Duration(milliseconds: 300),
+        height: _animateHeight,
+        child: Text.rich(textSpan),
+      );
     });
   }
 }

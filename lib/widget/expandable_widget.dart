@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ExpansionWidget extends StatefulWidget {
-  const ExpansionWidget({
+class ExpandableWidget extends StatefulWidget {
+  const ExpandableWidget({
     Key key,
     @required this.fixedWidget,
     this.children = const <Widget>[],
@@ -9,7 +9,7 @@ class ExpansionWidget extends StatefulWidget {
     this.childrenCrossAxisAlignment = CrossAxisAlignment.center,
     this.childrenMainAxisAlignment = MainAxisAlignment.start,
     this.initiallyExpanded = false,
-    this.onExpansionChanged,
+    this.onExpandChanged,
   })  : assert(fixedWidget != null),
         assert(fixedWidgetDirection != null),
         assert(childrenCrossAxisAlignment != null),
@@ -34,15 +34,15 @@ class ExpansionWidget extends StatefulWidget {
   final MainAxisAlignment childrenMainAxisAlignment;
 
   /// Called when the tile expands or collapses.
-  final ValueChanged<bool> onExpansionChanged;
+  final ValueChanged<bool> onExpandChanged;
 
   final bool initiallyExpanded;
 
   @override
-  _ExpansionWidgetState createState() => _ExpansionWidgetState();
+  _ExpandableWidgetState createState() => _ExpandableWidgetState();
 }
 
-class _ExpansionWidgetState extends State<ExpansionWidget> with SingleTickerProviderStateMixin {
+class _ExpandableWidgetState extends State<ExpandableWidget> with SingleTickerProviderStateMixin {
   static final Animatable<double> _easeInTween = CurveTween(curve: Curves.easeIn);
 
   AnimationController _controller;
@@ -85,7 +85,7 @@ class _ExpansionWidgetState extends State<ExpansionWidget> with SingleTickerProv
       }
       PageStorage.of(context)?.writeState(context, _isExpanded);
     });
-    if (widget.onExpansionChanged != null) widget.onExpansionChanged(_isExpanded);
+    if (widget.onExpandChanged != null) widget.onExpandChanged(_isExpanded);
   }
 
   Widget _buildFixedWidget(BuildContext context, Widget child) {
