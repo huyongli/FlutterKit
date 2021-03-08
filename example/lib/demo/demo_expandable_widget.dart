@@ -1,6 +1,6 @@
 import 'package:example/common/common_page.dart';
 import 'package:flutter/material.dart';
-import 'package:laohu_kit/widget/expandable_widget.dart';
+import 'package:laohu_kit/components/expandable_widget.dart';
 
 class DemoExpandableWidget extends StatelessWidget {
   

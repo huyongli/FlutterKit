@@ -1,18 +1,18 @@
-import 'package:example/demo/demo_expandable_text.dart';
-import 'package:example/demo/demo_expandable_widget.dart';
-import 'package:example/demo/demo_icon_text.dart';
-import 'package:example/demo/demo_keyboard.dart';
-import 'package:example/demo/demo_reader/demo_reader.dart';
-import 'package:example/demo/demo_simulation_page/demo_simulation_page.dart';
-import 'package:example/demo/demo_textpainter.dart';
 import 'package:flutter/widgets.dart';
 
 import 'demo/demo_animated_switcher.dart';
 import 'demo/demo_constraninedbox.dart';
 import 'demo/demo_custom_provider/cart_widget.dart';
+import 'demo/demo_expandable_text.dart';
+import 'demo/demo_expandable_widget.dart';
 import 'demo/demo_hero.dart';
+import 'demo/demo_icon_text.dart';
 import 'demo/demo_inheritedwidget/demo_inheritedwidget.dart';
+import 'demo/demo_keyboard.dart';
+import 'demo/demo_reader/demo_reader.dart';
+import 'demo/demo_simulation_page/demo_simulation_page.dart';
 import 'demo/demo_stagger_animation.dart';
+import 'demo/demo_textpainter.dart';
 
 class RouteNames {
   static const String readerPage = 'Reader';

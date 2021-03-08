@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:collection';
 
+import 'package:laohu_kit/business/page_state/page_state.dart';
 import 'package:laohu_kit/collection/stack.dart';
-import 'package:laohu_kit/widget/page_state/page_state.dart';
 
 import '../factory/factorys.dart';
 import '../common/reader_config.dart';

@@ -18,10 +18,10 @@ class ExpandableWidget extends StatefulWidget {
         assert(initiallyExpanded != null),
         super(key: key);
 
-  /// fix widget direction by the children
+  /// fix components direction by the children
   final AxisDirection fixedWidgetDirection;
 
-  /// fix widget
+  /// fix components
   final Widget fixedWidget;
 
   /// The widgets that are displayed when the tile expands.
@@ -79,7 +79,7 @@ class _ExpandableWidgetState extends State<ExpandableWidget> with SingleTickerPr
         _controller.reverse().then<void>((void value) {
           if (!mounted) return;
           setState(() {
-            // Rebuild without widget.children.
+            // Rebuild without components.children.
           });
         });
       }

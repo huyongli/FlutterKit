@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:laohu_kit/animation/direction_slide_transition.dart';
+import 'package:laohu_kit/components/animation/direction_slide_transition.dart';
 
 import '../common/common_page.dart';
 

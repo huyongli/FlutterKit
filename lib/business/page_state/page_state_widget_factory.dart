@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:laohu_kit/widget/page_state/page_state_widget.dart';
 
 import 'page_state.dart';
+import 'page_state_widget.dart';
 
 class PageStateWidgetFactory {
   Widget Function(LoadingState) loadingBuilder;
