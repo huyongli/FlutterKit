@@ -1,6 +1,5 @@
 import 'package:example/demo/demo_expandable_text.dart';
 import 'package:example/demo/demo_expandable_widget.dart';
-import 'package:example/demo/demo_http/demo_http.dart';
 import 'package:example/demo/demo_icon_text.dart';
 import 'package:example/demo/demo_keyboard.dart';
 import 'package:example/demo/demo_reader/demo_reader.dart';
@@ -24,7 +23,6 @@ class RouteNames {
   static const String staggerAnimationPage = '交织动画';
   static const String animatedSwitcherPage = 'AnimatedSwitcherAnimation';
   static const String expansionPage = 'ExpandableWidget';
-  static const String httpPage = 'Http';
   static const String iconTextPage = 'IconText';
   static const String keyboard = 'Keyboard';
   static const String textPainter = '文本测量';
@@ -42,7 +40,6 @@ class RouteConfig {
     RouteNames.staggerAnimationPage: (BuildContext context) => StaggerAnimationPage(),
     RouteNames.animatedSwitcherPage: (BuildContext context) => DemoAnimatedSwitcher(),
     RouteNames.expansionPage: (BuildContext context) => DemoExpandableWidget(),
-    RouteNames.httpPage: (BuildContext context) => DemoHttp(),
     RouteNames.iconTextPage: (BuildContext context) => DemoIconText(),
     RouteNames.keyboard: (BuildContext context) => DemoKeyBoard(),
     RouteNames.textPainter: (BuildContext context) => DemoTextPainter(),

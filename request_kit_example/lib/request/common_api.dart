@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
-import 'package:laohu_kit/request/factory/impl/default_path_factory.dart';
-import 'package:laohu_kit/request/api.dart';
-import 'package:laohu_kit/request/factory/impl/default_request_header_factory.dart';
-import 'package:laohu_kit/request/factory/impl/default_request_param_factory.dart';
-import 'package:laohu_kit/request/factory/impl/default_response_factory.dart';
-import 'package:laohu_kit/request/factory/url_factory.dart';
+import 'package:laohu_request_kit/api.dart';
+import 'package:laohu_request_kit/factory/impl/default_path_factory.dart';
+import 'package:laohu_request_kit/factory/impl/default_request_header_factory.dart';
+import 'package:laohu_request_kit/factory/impl/default_request_param_factory.dart';
+import 'package:laohu_request_kit/factory/impl/default_response_factory.dart';
+import 'package:laohu_request_kit/factory/url_factory.dart';
 
 import 'mock_client.dart';
 

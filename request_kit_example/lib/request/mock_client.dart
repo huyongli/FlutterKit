@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:laohu_kit/request/factory/request_client.dart';
-import 'package:laohu_kit/request/request.dart';
+import 'package:laohu_request_kit/factory/request_client.dart';
+import 'package:laohu_request_kit/request.dart';
 
 class MockClient extends RequestClient {
 

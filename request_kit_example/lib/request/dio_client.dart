@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:laohu_kit/request/factory/request_client.dart';
-import 'package:laohu_kit/request/request.dart';
-import 'package:laohu_kit/request/request_exception.dart';
-import 'package:laohu_kit/request/request_method.dart';
+import 'package:laohu_request_kit/factory/request_client.dart';
+import 'package:laohu_request_kit/request.dart';
+import 'package:laohu_request_kit/request_exception.dart';
+import 'package:laohu_request_kit/request_method.dart';
 
 class DioInterceptor extends InterceptorsWrapper {}
 

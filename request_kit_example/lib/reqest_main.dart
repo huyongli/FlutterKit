@@ -1,15 +1,33 @@
-import 'package:example/common/common_page.dart';
 import 'package:flutter/material.dart';
 
 import 'request/common_api.dart';
 
-class DemoHttp extends StatefulWidget {
-
-  @override
-  _DemoHttpState createState() => _DemoHttpState();
+void main() {
+  runApp(MyApp());
 }
 
-class _DemoHttpState extends State<DemoHttp> {
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: MainWidget(),
+    );
+  }
+}
+
+class MainWidget extends StatefulWidget {
+
+  @override
+  _MainWidgetState createState() => _MainWidgetState();
+}
+
+class _MainWidgetState extends State<MainWidget> {
   String result = '';
 
   @override
@@ -19,9 +37,11 @@ class _DemoHttpState extends State<DemoHttp> {
 
   @override
   Widget build(BuildContext context) {
-    return CommonPage.builder(
-      title: 'Http Demo',
-      child: Center(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Laohu request'),
+      ),
+      body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -39,7 +59,7 @@ class _DemoHttpState extends State<DemoHttp> {
             )
           ],
         ),
-      )
+      ),
     );
   }
 
