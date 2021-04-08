@@ -1,3 +1,4 @@
+import 'package:example/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 import 'route_config.dart';
@@ -9,9 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'FlutterKit',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeFactory.build(),
       routes: RouteConfig.routes,
       home: HomePage(),
     );
@@ -22,23 +21,20 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    List<String> routeNames = RouteConfig.routes.keys.toList();
     return Scaffold(
       appBar: AppBar(
         title: Text('Flutter Demo'),
       ),
-      body: DefaultTextStyle(
-        style: TextStyle(color: Colors.black, inherit: false, fontSize: 16),
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-          child: ListView(
-            children: RouteConfig.routes.keys
-                .map((routeName) => RaisedButton(
-                      onPressed: () => Navigator.of(context).pushNamed(routeName),
-                      child: new Text(routeName, style: theme.textTheme.button),
-                    ))
-                .toList(),
-          ),
-        ),
+      body: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+        itemBuilder: (context, index) {
+          return ElevatedButton(
+            onPressed: () => Navigator.of(context).pushNamed(routeNames[index]),
+            child: new Text(routeNames[index], style: theme.textTheme.bodyText2),
+          );
+        },
+        itemCount: routeNames.length,
       ),
     );
   }

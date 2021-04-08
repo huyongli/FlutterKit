@@ -1,5 +1,6 @@
 library laohu_request_kit;
 
+export 'factory/impl/default_domain_factory.dart';
 export 'factory/impl/default_path_factory.dart';
 export 'factory/impl/default_request_header_factory.dart';
 export 'factory/impl/default_request_param_factory.dart';
@@ -17,3 +18,8 @@ export 'api/request.dart';
 
 export 'common/request_exception.dart';
 export 'common/request_method.dart';
+export 'common/common_api.dart';
+
+export 'config/request_config.dart';
+
+export 'dio/dio_client.dart';
