@@ -1,4 +1,4 @@
-import '../../request_method.dart';
+import '../../common/request_method.dart';
 import '../url_factory.dart';
 
 class DefaultPathFactory extends PathFactory {

@@ -1,4 +1,4 @@
-import '../request.dart';
+import '../api/request.dart';
 
 abstract class RequestClient {
   Future<dynamic> execute(Request request);

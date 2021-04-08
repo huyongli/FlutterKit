@@ -1,4 +1,4 @@
-import 'request_method.dart';
+import '../common/request_method.dart';
 
 class Request {
   final String domain;

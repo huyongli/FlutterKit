@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'request/common_api.dart';
+import 'request/mock_api.dart';
 
 void main() {
   runApp(MyApp());
@@ -64,14 +64,14 @@ class _MainWidgetState extends State<MainWidget> {
   }
 
   void requestList() async {
-    List<dynamic> response = await CommonApi(path: 'list').get();
+    List<dynamic> response = await MockApi(path: 'list').get();
     setState(() {
       result = response.toString();
     });
   }
 
   void requestMap() async {
-    Map<String, dynamic> response =  await CommonApi(path: 'map').get();
+    Map<String, dynamic> response =  await MockApi(path: 'map').get();
     setState(() {
       result = response.toString();
     });

@@ -1,4 +1,4 @@
-import '../request_method.dart';
+import '../common/request_method.dart';
 
 abstract class DomainFactory {
   Future<String> newDomain();

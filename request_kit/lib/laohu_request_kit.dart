@@ -11,8 +11,9 @@ export 'factory/request_param_factory.dart';
 export 'factory/response_factory.dart';
 export 'factory/url_factory.dart';
 
-export 'api.dart';
-export 'api_executor.dart';
-export 'request.dart';
-export 'request_exception.dart';
-export 'request_method.dart';
+export 'api/api.dart';
+export 'api/api_executor.dart';
+export 'api/request.dart';
+
+export 'common/request_exception.dart';
+export 'common/request_method.dart';

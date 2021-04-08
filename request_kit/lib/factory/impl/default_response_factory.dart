@@ -1,4 +1,4 @@
-import '../../request.dart';
+import '../../api/request.dart';
 import '../response_factory.dart';
 
 class DefaultResponseFactory extends ResponseFactory {

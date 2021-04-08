@@ -1,4 +1,4 @@
-import '../request.dart';
+import '../api/request.dart';
 
 abstract class ResponseFactory {
   Future<dynamic> handleResponse(Request request, dynamic response);

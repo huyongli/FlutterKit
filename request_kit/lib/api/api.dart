@@ -1,14 +1,12 @@
 import 'package:flutter/foundation.dart';
 
 import 'api_executor.dart';
-import 'factory/request_client.dart';
-import 'factory/request_header_factory.dart';
-import 'factory/request_param_factory.dart';
-import 'factory/response_factory.dart';
-import 'factory/url_factory.dart';
-import 'request_method.dart';
-
-const int _timeOut = 30000;
+import '../factory/request_client.dart';
+import '../factory/request_header_factory.dart';
+import '../factory/request_param_factory.dart';
+import '../factory/response_factory.dart';
+import '../factory/url_factory.dart';
+import '../common/request_method.dart';
 
 class Api {
   final DomainFactory domain;
@@ -35,16 +33,16 @@ class Api {
     @required this.headers,
     @required this.response,
     @required this.client,
-    this.connectTimeout = _timeOut,
-    this.readTimeout = _timeOut,
+    @required this.connectTimeout,
+    @required this.readTimeout,
   })  : assert(domain != null),
         assert(path != null),
         assert(params != null),
         assert(headers != null),
         assert(response != null),
         assert(client != null),
-        assert(connectTimeout > 0),
-        assert(readTimeout > 0);
+        assert(connectTimeout != null && connectTimeout > 0),
+        assert(readTimeout != null && readTimeout > 0);
 
   Future<dynamic> get() async {
     _method = RequestMethod.GET;
