@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import '../config/request_config.dart';
 import '../factory/impl/default_domain_factory.dart';
 import '../factory/impl/default_path_factory.dart';
@@ -15,12 +13,12 @@ import '../api/api.dart';
 
 class CommonApi extends Api {
   CommonApi({
-    @required String path,
-    Map params,
-    DomainFactory domainFactory,
-    RequestHeaderFactory headerFactory,
-    ResponseFactory responseFactory,
-    RequestClient client,
+    required String path,
+    Map<String, dynamic>? params,
+    DomainFactory? domainFactory,
+    RequestHeaderFactory? headerFactory,
+    ResponseFactory? responseFactory,
+    RequestClient? client,
   }) : super(
           domain: domainFactory ?? _getDefaultDomainFactory(),
           path: DefaultPathFactory(path),
@@ -32,8 +30,8 @@ class CommonApi extends Api {
 }
 
 DomainFactory _getDefaultDomainFactory() {
-  if (RequestConfig.instance.domain != null && RequestConfig.instance.domain.isNotEmpty) {
+  if (RequestConfig.instance.domain.isNotEmpty) {
     return DefaultDomainFactory();
   }
-  return null;
+  throw ArgumentError('DomainFactory is null');
 }

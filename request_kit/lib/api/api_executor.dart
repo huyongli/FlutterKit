@@ -21,7 +21,7 @@ class ApiExecutor {
     );
 
     api.key = request.toString();
-    _cacheApi[api.key] = api;
+    _cacheApi[api.key!] = api;
 
     dynamic response;
     try {
@@ -37,9 +37,9 @@ class ApiExecutor {
     return response;
   }
 
-  void cancel({String apiKey}) {
+  void cancel({String? apiKey}) {
     if (_cacheApi.containsKey(apiKey)) {
-      _cacheApi[apiKey].client.cancel();
+      _cacheApi[apiKey]?.client.cancel();
     }
   }
 }

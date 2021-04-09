@@ -21,13 +21,13 @@ class Request {
   }
 
   Request({
-    this.domain,
-    this.path,
-    this.method,
-    this.headers,
-    this.params,
-    this.connectTimeout,
-    this.readTimeout,
+    required this.domain,
+    required this.path,
+    required this.method,
+    required this.headers,
+    required this.params,
+    required this.connectTimeout,
+    required this.readTimeout,
   });
 
   @override

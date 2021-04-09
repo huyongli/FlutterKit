@@ -5,7 +5,7 @@ class CircleColorWidget extends StatelessWidget {
   final Color color;
   final double radius;
 
-  CircleColorWidget({Color color, double radius})
+  CircleColorWidget({Color? color, double? radius})
       : color = color ?? Colors.black,
         radius = radius ?? 50;
 

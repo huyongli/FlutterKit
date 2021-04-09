@@ -1,24 +1,24 @@
 class TextUtil {
-  static bool isEmpty(String text) {
+  static bool isEmpty(String? text) {
     return text == null || text.isEmpty;
   }
 
-  static bool isNotEmpty(String text) {
+  static bool isNotEmpty(String? text) {
     return !isEmpty(text);
   }
 
-  static bool isTrimEmpty(String text) {
+  static bool isTrimEmpty(String? text) {
     return text == null || text.trim().isEmpty;
   }
 
-  static int length(String text) {
+  static int length(String? text) {
     return text == null ? 0 : text.length;
   }
 
-  static String reverse(String text) {
+  static String reverse(String? text) {
     if (isEmpty(text)) return '';
     StringBuffer sb = StringBuffer();
-    for (int i = text.length - 1; i >= 0; i--) {
+    for (int i = text!.length - 1; i >= 0; i--) {
       sb.writeCharCode(text.codeUnitAt(i));
     }
     return sb.toString();
@@ -36,10 +36,10 @@ class TextUtil {
   /// 每隔 x 位加 pattern, 从头开始
   static String formatDigitPattern(String text,
       {int digit = 4, String pattern = ' '}) {
-    text = text?.replaceAllMapped(RegExp("(.{$digit})"), (Match match) {
+    text = text.replaceAllMapped(RegExp("(.{$digit})"), (Match match) {
       return "${match.group(0)}$pattern";
     });
-    if (text != null && text.endsWith(pattern)) {
+    if (text.endsWith(pattern)) {
       text = text.substring(0, text.length - 1);
     }
     return text;

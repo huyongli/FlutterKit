@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:request_kit/request_kit.dart';
+import 'package:request_kit/api/request.dart';
+import 'package:request_kit/factory/request_client.dart';
 
 class MockClient extends RequestClient {
 

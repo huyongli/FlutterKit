@@ -2,13 +2,13 @@ import 'package:flutter/widgets.dart';
 import 'dart:ui' as ui show window;
 
 class ScreenUtil {
-  static MediaQueryData _mediaQuery;
+  static MediaQueryData? _mediaQuery;
 
   static MediaQueryData getDefaultMediaQuery() {
     if (_mediaQuery == null) {
       _mediaQuery = MediaQueryData.fromWindow(ui.window);
     }
-    return _mediaQuery;
+    return _mediaQuery!;
   }
 
   /// 以下屏幕相关属性不需要[BuildContext]

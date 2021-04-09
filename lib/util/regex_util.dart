@@ -3,12 +3,12 @@ import 'text_util.dart';
 
 class RegexUtil {
 
-  static bool isDigitText(String text) {
+  static bool isDigitText(String? text) {
     return validate(Regexs.REGEX_DIGIT, text);
   }
 
   /// 是否是手机号
-  static bool isMobilePhoneNo(String text, {PhoneRule rule = PhoneRule.loosest}) {
+  static bool isMobilePhoneNo(String? text, {PhoneRule rule = PhoneRule.loosest}) {
     String pattern;
     switch (rule) {
       case PhoneRule.strict:
@@ -24,37 +24,37 @@ class RegexUtil {
     return validate(pattern, text);
   }
 
-  static bool isIDCard(String text) {
+  static bool isIDCard(String? text) {
     return isIDCard18(text) || isIDCard15(text);
   }
 
   /// 18位身份证号
-  static bool isIDCard18(String text) {
+  static bool isIDCard18(String? text) {
     return validate(Regexs.REGEX_ID_CARD18, text);
   }
 
   /// 15位身份证号
-  static bool isIDCard15(String text) {
+  static bool isIDCard15(String? text) {
     return validate(Regexs.REGEX_ID_CARD15, text);
   }
 
-  static bool isEmail(String text) {
+  static bool isEmail(String? text) {
     return validate(Regexs.REGEX_EMAIL, text);
   }
 
-  static bool isBlank(String text) {
+  static bool isBlank(String? text) {
     return TextUtil.isEmpty(text) || validate(Regexs.REGEX_BLANK, text);
   }
 
-  static bool isChineseText(String text) {
+  static bool isChineseText(String? text) {
     return validate(Regexs.REGEX_CHINESE, text);
   }
 
-  static bool validate(String regex, String text) {
+  static bool validate(String regex, String? text) {
     if (TextUtil.isEmpty(text)) {
       return false;
     }
-    return RegExp(regex).hasMatch(text);
+    return RegExp(regex).hasMatch(text!);
   }
 }
 

@@ -23,7 +23,7 @@ class NetworkErrorState extends ErrorState {
 }
 
 class SuccessState<Model> extends PageState {
-  Model model;
+  Model? model;
 
   SuccessState({this.model});
 }

@@ -1,5 +1,5 @@
 abstract class RequestParamFactory {
-  Map<String, dynamic> params;
+  Map<String, dynamic>? params;
 
   RequestParamFactory(this.params);
 

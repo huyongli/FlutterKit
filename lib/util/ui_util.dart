@@ -13,6 +13,6 @@ class UIUtil {
   }
 
   static void hideKeyboardWithoutContext() {
-    FocusManager.instance.primaryFocus.unfocus();
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 }

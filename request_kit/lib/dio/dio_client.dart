@@ -65,7 +65,7 @@ class DioClient extends RequestClient {
           );
           break;
         default:
-          break;
+          throw ArgumentError('Method ${request.method} not implemented');
       }
       return response.data;
     } catch (e) {

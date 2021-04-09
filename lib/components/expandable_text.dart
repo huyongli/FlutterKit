@@ -38,27 +38,24 @@ class ExpandableText extends StatefulWidget {
 
   /// 展开收起的监听
   /// 不需要展示展开收起时，不会响应
-  final Function(bool) onExpandChanged;
+  final Function(bool)? onExpandChanged;
 
   ExpandableText({
-    Key key,
-    this.text,
+    Key? key,
+    required this.text,
     this.expandText = '展开',
     this.collapseText = '收起',
-    this.style,
+    required this.style,
     this.maxLines = 5,
     this.expanded = false,
     Color linkColor = Colors.black,
-    Widget expandIcon,
-    Widget collapseIcon,
-    double iconSize,
+    Widget? expandIcon,
+    Widget? collapseIcon,
+    double? iconSize,
     this.onExpandChanged,
-  })  : assert(text != null && text.length != 0),
-        assert(style != null),
-        assert(linkColor != null),
-        assert(expanded != null),
-        assert(expandText != null && expandText.isNotEmpty),
-        assert(collapseText != null && collapseText.isNotEmpty),
+  })  : assert(text.length != 0),
+        assert(expandText.isNotEmpty),
+        assert(collapseText.isNotEmpty),
         assert((expandIcon != null && collapseIcon != null && iconSize != null) ||
             (expandIcon == null && collapseIcon == null)),
         linkColor = linkColor,
@@ -73,10 +70,10 @@ class ExpandableText extends StatefulWidget {
 
 class _ExpandableTextState extends State<ExpandableText> {
   bool _expanded = false;
-  double _animateHeight;
+  double? _animateHeight;
   double _expandHeight = 0;
   double _collapseHeight = 0;
-  TapGestureRecognizer _tapGestureRecognizer;
+  late TapGestureRecognizer _tapGestureRecognizer;
 
   @override
   void initState() {
@@ -92,8 +89,8 @@ class _ExpandableTextState extends State<ExpandableText> {
       };
 
     if (widget.onExpandChanged != null && widget.expanded == true) {
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        widget.onExpandChanged.call(true);
+      WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+        widget.onExpandChanged?.call(true);
       });
     }
   }
@@ -129,8 +126,8 @@ class _ExpandableTextState extends State<ExpandableText> {
       measurer.measure(text: TextSpan(text: widget.text, style: widget.style));
       Size textSize = measurer.textRect;
 
-      var pixOffset = Offset(textSize.width - expandSize.width - widget.iconSize ?? 0, textSize.height);
-      int endPosition = measurer.getPositionBefore(pixOffset);
+      var pixOffset = Offset(textSize.width - expandSize.width - widget.iconSize, textSize.height);
+      int? endPosition = measurer.getPositionBefore(pixOffset);
       _expandHeight = measurer.allLayoutHeight;
       _collapseHeight = measurer.textRect.height;
       if (_animateHeight == null) {
@@ -146,11 +143,11 @@ class _ExpandableTextState extends State<ExpandableText> {
             style: widget.style.copyWith(color: widget.linkColor),
             recognizer: _tapGestureRecognizer,
           ),
-          if (widget.expandIcon != null && widget.iconSize != 0)
+          if (widget.iconSize > 0)
             WidgetSpan(
               child: GestureDetector(
                 behavior: HitTestBehavior.translucent,
-                onTap: () => _tapGestureRecognizer.onTap.call(),
+                onTap: () => _tapGestureRecognizer.onTap?.call(),
                 child: _expanded ? widget.collapseIcon : widget.expandIcon,
               ),
               alignment: PlaceholderAlignment.middle,

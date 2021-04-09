@@ -1,13 +1,12 @@
 class User {
-  String name;
-  int age;
+  final String name;
+  final int age;
 
-  User();
+  User({required this.name, required this.age});
+
 
   User fromJson(Map<String, dynamic> json) {
-    return User()
-        ..name = json['name']
-        ..age = json['age'];
+    return User(name: json['name'], age: json['age']);
   }
 
   @override
@@ -17,15 +16,13 @@ class User {
 }
 
 class School {
-  String schoolName;
-  String address;
+  final String schoolName;
+  final String address;
 
-  School();
+  School({required this.schoolName, required this.address});
 
   School fromJson(Map<String, dynamic> json) {
-    return School()
-      ..schoolName = json['schoolName']
-      ..address = json['address'];
+    return School(schoolName: json['schoolName'], address: json['address']);
   }
 
   @override

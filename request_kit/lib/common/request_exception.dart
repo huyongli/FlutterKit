@@ -1,6 +1,6 @@
 class RequestException extends Error {
   final int httpCode;
-  final String message;
+  final String? message;
 
   RequestException({this.message, this.httpCode = -1});
 
@@ -11,7 +11,7 @@ class RequestException extends Error {
 }
 
 class ClientException extends Error {
-  final String message;
+  final String? message;
 
   ClientException(this.message);
 

@@ -2,17 +2,14 @@ import 'package:flutter/material.dart';
 
 class IconText extends StatelessWidget {
   const IconText({
-    Key key,
-    @required this.icon,
-    @required this.text,
+    Key? key,
+    required this.icon,
+    required this.text,
     this.direction = AxisDirection.up,
     this.padding = EdgeInsets.zero,
     this.space = 0,
     this.onPressed,
-  })  : assert(icon != null),
-        assert(text != null),
-        assert(direction != null),
-        super(key: key);
+  })  : super(key: key);
 
   final Widget icon;
 
@@ -26,7 +23,7 @@ class IconText extends StatelessWidget {
   /// icon direction
   final AxisDirection direction;
 
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   bool get _isVertical => direction == AxisDirection.up || direction == AxisDirection.down;
 
@@ -44,7 +41,7 @@ class IconText extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: _buildIconText());
 
-    if (padding != null) {
+    if (padding.horizontal != 0 && padding.vertical != 0) {
       child = Container(padding: padding, child: child);
     }
     if (onPressed != null) {
@@ -59,11 +56,11 @@ class IconText extends StatelessWidget {
     switch (direction) {
       case AxisDirection.left:
       case AxisDirection.up:
-        list = [icon, SizedBox(height: space ?? 0), text];
+        list = [icon, SizedBox(height: space), text];
         break;
       case AxisDirection.down:
       case AxisDirection.right:
-        list = [text, SizedBox(height: space ?? 0), icon];
+        list = [text, SizedBox(height: space), icon];
         break;
     }
     return list;

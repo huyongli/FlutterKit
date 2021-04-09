@@ -1,7 +1,7 @@
 class Stack<E> {
-  final List<E> _stack;
+  final List<E> _stack = List<E>.empty(growable: true);
 
-  Stack() : _stack = List<E>();
+  Stack();
 
   bool get isEmpty => size == 0;
 

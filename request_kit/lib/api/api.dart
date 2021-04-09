@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 import 'api_executor.dart';
 import '../config/request_config.dart';
 import '../factory/request_client.dart';
@@ -18,31 +16,25 @@ class Api {
   final RequestClient client;
   final int connectTimeout; // milliseconds
   final int readTimeout; // milliseconds
-  RequestMethod _method;
+  RequestMethod? _method;
 
-  RequestMethod get method => _method;
+  RequestMethod get method => _method ?? RequestMethod.GET;
 
   ApiExecutor _apiExecutor = ApiExecutor();
 
   /// update by [ApiExecutor]
-  String key;
+  String? key;
 
   Api({
-    @required this.domain,
-    @required this.path,
-    @required this.params,
-    @required this.headers,
-    @required this.response,
-    @required this.client,
-    int connectTimeout,
-    int readTimeout,
-  })  : assert(domain != null),
-        assert(path != null),
-        assert(params != null),
-        assert(headers != null),
-        assert(response != null),
-        assert(client != null),
-        this.connectTimeout = connectTimeout ?? RequestConfig.instance.connectTimeout,
+    required this.domain,
+    required this.path,
+    required this.params,
+    required this.headers,
+    required this.response,
+    required this.client,
+    int? connectTimeout,
+    int? readTimeout,
+  })  : this.connectTimeout = connectTimeout ?? RequestConfig.instance.connectTimeout,
         this.readTimeout = connectTimeout ?? RequestConfig.instance.readTimeout;
 
   Future<dynamic> get() async {

@@ -2,21 +2,15 @@ import 'package:flutter/material.dart';
 
 class ExpandableWidget extends StatefulWidget {
   const ExpandableWidget({
-    Key key,
-    @required this.fixedWidget,
+    Key? key,
+    required this.fixedWidget,
     this.children = const <Widget>[],
     this.fixedWidgetDirection = AxisDirection.up,
     this.childrenCrossAxisAlignment = CrossAxisAlignment.center,
     this.childrenMainAxisAlignment = MainAxisAlignment.start,
     this.initiallyExpanded = false,
     this.onExpandChanged,
-  })  : assert(fixedWidget != null),
-        assert(fixedWidgetDirection != null),
-        assert(childrenCrossAxisAlignment != null),
-        assert(childrenMainAxisAlignment != null),
-        assert(children != null),
-        assert(initiallyExpanded != null),
-        super(key: key);
+  })  : super(key: key);
 
   /// fix components direction by the children
   final AxisDirection fixedWidgetDirection;
@@ -34,7 +28,7 @@ class ExpandableWidget extends StatefulWidget {
   final MainAxisAlignment childrenMainAxisAlignment;
 
   /// Called when the tile expands or collapses.
-  final ValueChanged<bool> onExpandChanged;
+  final ValueChanged<bool>? onExpandChanged;
 
   final bool initiallyExpanded;
 
@@ -45,8 +39,8 @@ class ExpandableWidget extends StatefulWidget {
 class _ExpandableWidgetState extends State<ExpandableWidget> with SingleTickerProviderStateMixin {
   static final Animatable<double> _easeInTween = CurveTween(curve: Curves.easeIn);
 
-  AnimationController _controller;
-  Animation<double> _sizeFactor;
+  late AnimationController _controller;
+  late Animation<double> _sizeFactor;
 
   bool get isVerticalDirection =>
       widget.fixedWidgetDirection == AxisDirection.up || widget.fixedWidgetDirection == AxisDirection.down;
@@ -85,10 +79,10 @@ class _ExpandableWidgetState extends State<ExpandableWidget> with SingleTickerPr
       }
       PageStorage.of(context)?.writeState(context, _isExpanded);
     });
-    if (widget.onExpandChanged != null) widget.onExpandChanged(_isExpanded);
+    if (widget.onExpandChanged != null) widget.onExpandChanged?.call(_isExpanded);
   }
 
-  Widget _buildFixedWidget(BuildContext context, Widget child) {
+  Widget _buildFixedWidget(BuildContext context, Widget? child) {
     List<Widget> children;
     switch (widget.fixedWidgetDirection) {
       case AxisDirection.up:
@@ -125,7 +119,7 @@ class _ExpandableWidgetState extends State<ExpandableWidget> with SingleTickerPr
         animation: _controller.view, builder: _buildFixedWidget, child: closed ? null : expansionChild);
   }
 
-  List<Widget> _buildFixedWidgetChildren(Widget child) {
+  List<Widget> _buildFixedWidgetChildren(Widget? child) {
     return [
       GestureDetector(
         behavior: HitTestBehavior.translucent,
