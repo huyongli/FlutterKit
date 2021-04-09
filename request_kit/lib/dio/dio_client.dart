@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:laohu_request_kit/config/request_config.dart';
 
+import '../config/request_config.dart';
 import '../factory/request_client.dart';
 import '../api/request.dart';
 import '../common/request_exception.dart';
