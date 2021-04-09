@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import 'api_executor.dart';
+import '../config/request_config.dart';
 import '../factory/request_client.dart';
 import '../factory/request_header_factory.dart';
 import '../factory/request_param_factory.dart';
@@ -33,16 +34,16 @@ class Api {
     @required this.headers,
     @required this.response,
     @required this.client,
-    @required this.connectTimeout,
-    @required this.readTimeout,
+    int connectTimeout,
+    int readTimeout,
   })  : assert(domain != null),
         assert(path != null),
         assert(params != null),
         assert(headers != null),
         assert(response != null),
         assert(client != null),
-        assert(connectTimeout != null && connectTimeout > 0),
-        assert(readTimeout != null && readTimeout > 0);
+        this.connectTimeout = connectTimeout ?? RequestConfig.instance.connectTimeout,
+        this.readTimeout = connectTimeout ?? RequestConfig.instance.readTimeout;
 
   Future<dynamic> get() async {
     _method = RequestMethod.GET;

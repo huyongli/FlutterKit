@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:laohu_request_kit/request_kit.dart';
+import 'package:request_kit/request_kit.dart';
 
 import 'mock_client.dart';
 

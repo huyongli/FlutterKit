@@ -28,8 +28,6 @@ class CommonApi extends Api {
           headers: headerFactory ?? DefaultRequestHeaderFactory(),
           response: responseFactory ?? DefaultResponseFactory(),
           client: client ?? DioClient(),
-          connectTimeout: RequestConfig.instance.connectTimeout,
-          readTimeout: RequestConfig.instance.readTimeout,
         );
 }
 
