@@ -1,9 +1,9 @@
-import 'package:route_kit/core/route.dart';
+import 'package:route_kit/route_kit.dart';
 
-class RedPageRoute extends BaseRoute {
+class RedPageRoute extends LHPageRoute {
   @override
   RouteWidgetBuilder get builder => throw UnimplementedError();
 
   @override
-  String get route => throw UnimplementedError();
+  String get name => throw UnimplementedError();
 }
