@@ -11,7 +11,6 @@ import 'package:route_kit/core/routers/router.dart';
 import 'package:route_kit/route_kit.dart';
 
 class LHNavigator {
-  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   static bool isDebug = !kReleaseMode;
 
   /// 当push的为未注册的路由时
