@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:route_kit/core/definition/flutter_route.dart';
-import 'package:route_kit/core/definition/route.dart';
+import 'package:route_kit/core/route/flutter_route.dart';
+import 'package:route_kit/core/route/route.dart';
 
 abstract class LHRouter<T extends LHRoute> {
 

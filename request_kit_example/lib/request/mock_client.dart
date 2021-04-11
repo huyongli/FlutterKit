@@ -8,7 +8,7 @@ class MockClient extends RequestClient {
 
   @override
   Future<dynamic> execute(Request request) async {
-    String path = request.path.split('/').last ?? '';
+    String path = request.path.split('/').last;
     String content = await rootBundle.loadString('assets/mocks/$path.json');
     var response = json.decode(content);
     return response;

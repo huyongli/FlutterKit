@@ -1,4 +1,4 @@
-import 'package:route_kit/core/definition/route.dart';
+import 'package:route_kit/core/route/route.dart';
 
 class LHRouteInterceptor {
   /// 在路由Push之前对路由进行拦截处理

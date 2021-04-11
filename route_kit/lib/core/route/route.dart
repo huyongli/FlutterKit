@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 typedef RouteWidgetBuilder = Widget Function(BuildContext context, Map<String, dynamic> params);
@@ -24,10 +25,15 @@ class RouteDeepLimit {
 
   @override
   int get hashCode => group.hashCode;
+
+  @override
+  String toString() {
+    return '${objectRuntimeType(this, 'RouteDeepLimit')}("$group", $isContinuousRouteLimit, $limit)';
+  }
 }
 
 abstract class LHRoute {
-  /// 路由名称，需具备唯一性
+  /// 路由名称，具备唯一性
   String get name;
 
   Map<String, dynamic> params = <String, dynamic>{};
@@ -44,6 +50,11 @@ abstract class LHRoute {
 
   @override
   int get hashCode => name.hashCode;
+
+  @override
+  String toString() {
+    return '${objectRuntimeType(this, 'LHRoute')}("$name")';
+  }
 }
 
 abstract class LHPageRoute extends LHRoute {
@@ -53,6 +64,11 @@ abstract class LHPageRoute extends LHRoute {
   /// 页面进行深度限制，
   /// 为null则不进行限制
   RouteDeepLimit? get deepLimit => null;
+
+  @override
+  String toString() {
+    return '${objectRuntimeType(this, 'LHPageRoute')}("$name", $deepLimit)';
+  }
 }
 
 extension LHRouteExt on LHRoute {
@@ -60,10 +76,18 @@ extension LHRouteExt on LHRoute {
 }
 
 abstract class LHActionRoute extends LHRoute {
-  
   Future<Map<dynamic, dynamic>> execute(BuildContext context, Map<String, dynamic> params);
+
+  @override
+  String toString() {
+    return '${objectRuntimeType(this, 'LHActionRoute')}("$name")';
+  }
 }
 
 abstract class LHRemovablePageRoute extends LHPageRoute {
 
+  @override
+  String toString() {
+    return '${objectRuntimeType(this, 'LHRemovablePageRoute')}("$name")';
+  }
 }

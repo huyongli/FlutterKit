@@ -8,7 +8,7 @@ class DefaultPathFactory extends PathFactory {
   Future<String> newPath(Map<String, dynamic> params, RequestMethod method) async {
     String newPath = path;
     List<String> pathKeys = [];
-    params?.forEach((key, value) {
+    params.forEach((key, value) {
       bool hasKey = newPath.contains('{$key}');
       if (hasKey) {
         newPath = newPath.replaceAll('{$key}', value);

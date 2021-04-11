@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:route_kit/core/definition/flutter_route.dart';
-
-import 'package:route_kit/core/definition/route.dart';
+import 'package:route_kit/core/route/flutter_route.dart';
+import 'package:route_kit/core/route/route.dart';
 import 'package:route_kit/core/interceptor/interceptor.dart';
 import 'package:route_kit/core/observers/route_push_observer.dart';
 import 'package:route_kit/core/observers/route_observer.dart';
@@ -12,11 +11,6 @@ import 'package:route_kit/route_kit.dart';
 
 class LHNavigator {
   static bool isDebug = !kReleaseMode;
-
-  /// 当push的为未注册的路由时
-  /// 1. 该值不为null，则会跳转到对应的页面上去
-  /// 2. 如果该值为null，则会停止跳转
-  static LHPageRoute? unknownRoute;
 
   /// 路由schema头
   static List<String> _routeSchemas = [];
@@ -40,37 +34,60 @@ class LHNavigator {
 
   static Map<String, LHRoute> get routes => _routes;
 
-  /// 当前栈顶路由
-  LHPageRoute? get topRoute => LHRouteObserver.instance.topRoute;
+  /// 主页路由
+  static late LHPageRoute _homeRoute;
 
-  void registerRoutes(List<LHRoute> routes) {
+  static LHPageRoute get homeRoute => _homeRoute;
+
+  /// 当push的为未注册的路由时
+  /// 1. 该值不为null，则会跳转到对应的页面上去
+  /// 2. 如果该值为null，则会停止跳转
+  static LHPageRoute? _unknownRoute;
+
+  /// 当前栈顶路由
+  static LHPageRoute? get topRoute => LHRouteObserver.instance.topRoute;
+
+  static Widget getHomePage(BuildContext context) {
+    assert(routes.isNotEmpty);
+    return homeRoute.builder.call(context, homeRoute.actualParams);
+  }
+
+  static void registerRoutes({required List<LHRoute> routes, LHPageRoute? homeRoute, LHPageRoute? unknownRoute}) {
     Map<String, LHRoute> routeMaps = routes.fold(<String, LHRoute>{}, (previousValue, element) {
       if (previousValue.containsKey(element.name)) {
-        throw ArgumentError('Duplicate definition route name for \'${element.name}\'');
+        throw AssertionError('Duplicate definition route name for \'${element.name}\'');
       }
       previousValue[element.name] = element;
       return previousValue;
     });
+    if (homeRoute == null && (!routeMaps.containsKey('/') || routeMaps['/'] is! LHPageRoute)) {
+      throw AssertionError('The main route is not registered');
+    }
+    _homeRoute = homeRoute ?? routeMaps['/'] as LHPageRoute;
+    if (!routeMaps.containsKey(_homeRoute.name)) {
+      routeMaps[_homeRoute.name] = _homeRoute;
+    }
+    _unknownRoute = unknownRoute;
     _routes = Map.unmodifiable(routeMaps);
   }
 
-  void registerRouteSchema(List<String> schemas) {
+  static void registerRouteSchema(List<String> schemas) {
     _routeSchemas.addAll(schemas);
   }
 
-  void registerInterceptor(List<LHRouteInterceptor> interceptors) {
+  static void registerInterceptor(List<LHRouteInterceptor> interceptors) {
     _interceptors.addAll(interceptors);
   }
 
-  void registerRoutePushObserver(List<LHRoutePushObserver> observers) {
+  static void registerRoutePushObserver(List<LHRoutePushObserver> observers) {
     _routePushObservers.addAll(observers);
   }
 
-  void registerRouteObserver(List<NavigatorObserver> observers) {
+  static void registerRouteObserver(List<NavigatorObserver> observers) {
     _routeObservers.addAll(observers);
   }
 
-  void registerNavigateRouters(List<LHRouter> routers) {
+  static void registerNavigateRouters(List<LHRouter> routers) {
     _navigateRouters.addAll(routers);
   }
 
@@ -105,30 +122,34 @@ class LHNavigator {
   }
 
   /// [routeName] 参数对应 [Route.name] 的值
-  static Future<Map<dynamic, dynamic>> pushName(BuildContext context, String routeName, Map<String, dynamic> params) {
+  static Future<Map<dynamic, dynamic>> pushName(BuildContext context, String routeName,
+      {Map<String, dynamic>? params}) {
     if (!_routes.containsKey(routeName)) {
       return _handleUnknownRoute(context, 'Route: \'$routeName\' is not registered');
     }
     LHRoute route = _routes[routeName]!;
-    route.params.addAll(params);
+    route.params.clear();
+    route.params.addAll(params ?? <String, dynamic>{});
     return push(context, route);
   }
 
   /// [routeUrl] 参数为[Uri] Schema格式的路由链接
   /// 示例：https://host/path
-  static Future<Map<dynamic, dynamic>> pushUrl(BuildContext context, String routeUrl, Map<String, dynamic> params) {
+  static Future<Map<dynamic, dynamic>> pushUrl(BuildContext context, String routeUrl, {Map<String, dynamic>? params}) {
+    Map<String, dynamic> newParams = params ?? <String, dynamic>{};
+
+    Uri uri = Uri.parse(routeUrl);
+    uri.queryParameters.forEach((key, value) {
+      newParams[key] = value;
+    });
     if (_routeSchemas.isEmpty) {
-      return pushName(context, routeUrl, params);
+      return pushName(context, uri.path, params: newParams);
     }
     String schema = _routeSchemas.firstWhere((element) => routeUrl.startsWith(RegExp(element)), orElse: () => '');
     if (schema.isEmpty) {
       return _handleUnknownRoute(context, 'Route: \'$routeUrl\' not start width \'$_routeSchemas\'');
     }
-    Uri uri = Uri.parse(routeUrl);
-    uri.queryParameters.forEach((key, value) {
-      params[key] = value;
-    });
-    return pushName(context, uri.path, params);
+    return pushName(context, uri.path, params: newParams);
   }
 
   static Future<bool> _isInterceptRoute(LHRoute route) async {
@@ -137,8 +158,8 @@ class LHNavigator {
   }
 
   static Future<Map<dynamic, dynamic>> _handleUnknownRoute(BuildContext context, String unknownMsg) {
-    if (unknownRoute != null) {
-      return push(context, unknownRoute!);
+    if (_unknownRoute != null) {
+      return push(context, _unknownRoute!);
     }
     if (isDebug) {
       throw ArgumentError(unknownMsg);
@@ -146,11 +167,11 @@ class LHNavigator {
     return Future.value(<dynamic, dynamic>{});
   }
 
-  bool canPop(BuildContext context) {
+  static bool canPop(BuildContext context) {
     return _navigateRouters.fold(false, (previousValue, element) => previousValue || element.canPop(context));
   }
 
-  void pop(BuildContext context, Map<dynamic, dynamic> params) {
+  static void pop(BuildContext context, {Map<dynamic, dynamic> params = const {}}) {
     for (var router in _navigateRouters) {
       if (router.pop(context, params)) {
         return;
@@ -158,7 +179,7 @@ class LHNavigator {
     }
   }
 
-  void popToRoute(BuildContext context, LHPageRoute route) {
+  static void popToRoute(BuildContext context, LHPageRoute route) {
     for (var router in _navigateRouters) {
       if (router.popToRoute(context, route)) {
         return;
@@ -166,7 +187,7 @@ class LHNavigator {
     }
   }
 
-  void popRemovable<T extends LHRemovablePageRoute>(BuildContext context) {
+  static void popRemovable<T extends LHRemovablePageRoute>(BuildContext context) {
     for (var router in _navigateRouters) {
       if (router.popRemovable<T>(context)) {
         return;
@@ -174,7 +195,7 @@ class LHNavigator {
     }
   }
 
-  void clearRemovable(BuildContext context) {
+  static void clearRemovable(BuildContext context) {
     popRemovable<LHRemovablePageRoute>(context);
   }
 }

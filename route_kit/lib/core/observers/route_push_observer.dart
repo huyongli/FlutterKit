@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:route_kit/core/definition/flutter_route.dart';
-import 'package:route_kit/core/definition/route.dart';
+import 'package:route_kit/core/route/flutter_route.dart';
+import 'package:route_kit/core/route/route.dart';
 import 'package:route_kit/core/navigator.dart';
 import 'package:route_kit/core/observers/route_observer.dart';
 
@@ -31,27 +31,40 @@ class DefaultLHRoutePushObserver implements LHRoutePushObserver {
       return Future.value();
     }
     _removeRoutes.clear();
-    Map<RouteDeepLimit, List<LHFlutterRoute>> stackRoutes = <RouteDeepLimit, List<LHFlutterRoute>>{};
-    LHRouteObserver.instance.routes.forEach((element) {
-      if (element.routeDefinition.deepLimit != null) {
-        RouteDeepLimit deepLimit = element.routeDefinition.deepLimit!;
-        if (!stackRoutes.containsKey(deepLimit)) {
-          stackRoutes[deepLimit] = <LHFlutterRoute>[];
+    Map<RouteDeepLimit, List<LHFlutterRoute>> groupRoutes = <RouteDeepLimit, List<LHFlutterRoute>>{};
+    LHFlutterRoute? lastHistoryRoute;
+    LHRouteObserver.instance.routes.forEach((historyRoute) {
+      if (historyRoute.routeDefinition.deepLimit != null) {
+        if (lastHistoryRoute == null || !historyRoute.routeDefinition.deepLimit!.isContinuousRouteLimit ||
+            lastHistoryRoute?.routeDefinition.deepLimit == historyRoute.routeDefinition.deepLimit) {
+          /// 相邻两个路由是同一个deep group，或当前路由不限制连续路由
+          RouteDeepLimit deepLimit = historyRoute.routeDefinition.deepLimit!;
+          if (!groupRoutes.containsKey(deepLimit)) {
+            groupRoutes[deepLimit] = <LHFlutterRoute>[];
+          }
+          groupRoutes[deepLimit]?.add(historyRoute);
+        } else {
+          /// 相邻两个路由不是同一个deep group
+          /// 判断非[historyRoute.routeDefinition.deepLimit]且有深度限制的路由是否限制为连续路由
+          /// 如果限制为连续路由，则将前面得到的路由组清空(此时已经不连续了)，也就不会进行清除
+          /// 如果不限制为连续路由则不做处理，后面只要达到限制深度就会移除
+          groupRoutes.keys
+              .where((group) => group != historyRoute.routeDefinition.deepLimit && group.isContinuousRouteLimit)
+              .toList()
+              .forEach((group) => groupRoutes.remove(group));
         }
-        stackRoutes[deepLimit]?.add(element);
       } else {
         /// 当前路由没有深度限制
         /// 判断有深度限制的路由是否限制为连续路由
         /// 如果限制为连续路由，则将前面得到的路由组清空(此时已经不连续了)，也就不会进行清除
         /// 如果不限制为连续路由则不做处理，后面只要达到限制深度就会移除
-        List<RouteDeepLimit> continuousLimit =
-            stackRoutes.keys.where((element) => element.isContinuousRouteLimit).toList();
-        continuousLimit.forEach((element) {
-          stackRoutes.remove(element);
-        });
+        groupRoutes.keys
+            .where((group) => group.isContinuousRouteLimit)
+            .toList()
+            .forEach((group) => groupRoutes.remove(group));
       }
 
-      stackRoutes.forEach((key, value) {
+      groupRoutes.forEach((key, value) {
         int limit = key == route.deepLimit ? key.limit - 1 : key.limit;
         if (value.length > limit) {
           LHFlutterRoute first = value.first;
@@ -59,6 +72,7 @@ class DefaultLHRoutePushObserver implements LHRoutePushObserver {
           _removeRoutes.add(first);
         }
       });
+      lastHistoryRoute = historyRoute;
     });
     return Future.value();
   }

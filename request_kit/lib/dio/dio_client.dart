@@ -70,10 +70,11 @@ class DioClient extends RequestClient {
       return response.data;
     } catch (e) {
       if (e is DioError) {
-        if (e.type == DioErrorType.cancel) {
-          throw CancelException();
-        } else {
-          throw e;
+        switch (e.type) {
+          case DioErrorType.cancel:
+            throw CancelException();
+          default:
+            throw e;
         }
       } else {
         if (e is RequestException) {

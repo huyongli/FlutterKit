@@ -8,7 +8,7 @@ class ApiExecutor {
     String domain = await api.domain.newDomain();
     Map<String, dynamic> params = await api.params.buildRequestParams();
     String path = await api.path.newPath(params, api.method);
-    Map<String, dynamic> headers = await api.headers.buildHeaders(params ?? {});
+    Map<String, dynamic> headers = await api.headers.buildHeaders(params);
 
     Request request = Request(
       domain: domain,

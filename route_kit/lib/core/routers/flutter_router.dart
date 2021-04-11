@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:route_kit/core/definition/flutter_route.dart';
-import 'package:route_kit/core/definition/route.dart';
+import 'package:route_kit/core/route/flutter_route.dart';
+import 'package:route_kit/core/route/route.dart';
 import 'package:route_kit/core/navigator.dart';
 import 'package:route_kit/core/observers/route_observer.dart';
 import 'package:route_kit/core/routers/router.dart';
@@ -34,7 +34,7 @@ class FlutterRouter extends LHRouter<LHPageRoute> {
     );
 
     Map<dynamic, dynamic>? result = await Navigator.of(context).pushAndRemoveUntil(
-        flutterRoute, (route) => predicate.call(flutterRoute));
+        flutterRoute, (route) => route is LHFlutterRoute && predicate.call(route));
 
     await Future.wait(LHNavigator.routePushObservers.map((e) => e.onAfterPush(context, route)));
 
@@ -77,7 +77,7 @@ class FlutterRouter extends LHRouter<LHPageRoute> {
 
   @override
   bool popRemovable<T extends LHRemovablePageRoute>(BuildContext context) {
-    LHRouteObserver.instance.routes.where((element) => element is T).forEach((element) {
+    LHRouteObserver.instance.routes.where((element) => element.routeDefinition is T).forEach((element) {
       Navigator.of(context).removeRoute(element);
     });
     return true;

@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:route_kit/core/definition/route.dart';
+import 'package:route_kit/core/route/route.dart';
 import 'package:route_kit/core/routers/router.dart';
 
 class ActionRouter extends LHRouter<LHActionRoute> {

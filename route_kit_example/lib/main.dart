@@ -1,10 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:route_kit/core/navigator.dart';
+import 'package:route_kit_example/route/routes.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(RouteApp());
 }
 
-class MyApp extends StatelessWidget {
+class RouteApp extends StatefulWidget {
+  @override
+  _RouteAppState createState() => _RouteAppState();
+}
+
+class _RouteAppState extends State<RouteApp> {
+  @override
+  void initState() {
+    super.initState();
+    LHNavigator.registerRoutes(
+      routes: [
+        PageRoute1(),
+        PageRoute2(),
+        PageRoute3(),
+        ReturnRoute(),
+        PushAndRemoveRoute(),
+        PushAndRemoveRoute2(),
+        DeepLimitNoneContinuousRoute1(),
+        DeepLimitNoneContinuousRoute2(),
+        ContinuousDeepLimitRoute(),
+        FirstRemovableRoute(),
+        SecondRemovableRoute(),
+      ],
+      homeRoute: HomePageRoute(),
+      unknownRoute: UnknownRout(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -12,14 +41,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      navigatorObservers: LHNavigator.routeObservers,
+      home: LHNavigator.getHomePage(context),
     );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
