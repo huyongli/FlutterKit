@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:route_kit/core/route/flutter_route.dart';
-import 'package:route_kit/core/route/route.dart';
+import 'package:route_kit/route/flutter_route.dart';
+import 'package:route_kit/route/route.dart';
 
 class LHRouteObserver extends RouteObserver {
   static final LHRouteObserver instance = LHRouteObserver._internal();

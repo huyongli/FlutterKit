@@ -1,4 +1,4 @@
-import 'package:route_kit/route_kit.dart';
+import 'package:route_kit/route/route.dart';
 import 'package:route_kit_example/page/common_page.dart';
 import 'package:route_kit_example/page/deep_limit_page.dart';
 import 'package:route_kit_example/page/home_page.dart';

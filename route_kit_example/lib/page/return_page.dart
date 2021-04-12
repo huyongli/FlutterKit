@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:route_kit/core/navigator.dart';
+import 'package:route_kit/navigator.dart';
 import 'package:route_kit_example/route/routes.dart';
 
 class ReturnParamsPage extends StatefulWidget {

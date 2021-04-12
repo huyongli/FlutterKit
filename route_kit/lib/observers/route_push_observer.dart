@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
-import 'package:route_kit/core/route/flutter_route.dart';
-import 'package:route_kit/core/route/route.dart';
-import 'package:route_kit/core/navigator.dart';
-import 'package:route_kit/core/observers/route_observer.dart';
+import 'package:route_kit/route/flutter_route.dart';
+import 'package:route_kit/route/route.dart';
+import 'package:route_kit/navigator.dart';
+import 'package:route_kit/observers/route_observer.dart';
 
 class LHRoutePushObserver {
   Future<void> onBeforePush(BuildContext context, LHPageRoute route) {

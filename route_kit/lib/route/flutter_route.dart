@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:route_kit/core/route/route.dart';
+import 'package:route_kit/route/route.dart';
 
 typedef LHRoutePredicate = bool Function(LHFlutterRoute route);
 
