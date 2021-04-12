@@ -1,14 +1,11 @@
 # request_kit
 
-A new Flutter package for request
+Flutter请求库，支持如下功能：
+1. 支持自定义请求底层实现(默认采用Dio)
+2. 支持配置请求baseURL
+3. 支持来自多个不同baseURL的请求
+4. 支持自定义请求拦截器(针对Dio)
+5. 支持针对一类请求自定义Response响应
+6. 支持针对一类请求自定义Header响应
+7. 支持针对一类请求自定义Parameter响应
 
-## Getting Started
-
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.

@@ -125,7 +125,7 @@ class LHNavigator {
   static Future<Map<dynamic, dynamic>> pushName(BuildContext context, String routeName,
       {Map<String, dynamic>? params}) {
     if (!_routes.containsKey(routeName)) {
-      return _handleUnknownRoute(context, 'Route: \'$routeName\' is not registered');
+      return _handleUnknownRoute(context, 'Route: \'$routeName\' was not found');
     }
     LHRoute route = _routes[routeName]!;
     route.params.clear();

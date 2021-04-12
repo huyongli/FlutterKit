@@ -1,14 +1,13 @@
 # route_kit
 
-A flutter route kit.
-
-## Getting Started
-
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+### Flutter路由库，支持如下功能：
+1. 路由名跳转
+2. Schema URL跳转
+3. 获取栈顶路由
+4. 支持自定义路由Push前后的监听
+5. 支持设置路由拦截器
+6. 支持路由页面深度限制，超过深度自动清除(例如：商品详情页最多允许出现3个)
+7. 支持将多个不同的路由配置为相同深度限制规则
+8. 支持一键移除同一类型的路由页面
+9. 支持使用路由的方式响应任何实现
+10. 支持自定义扩展路由实现
