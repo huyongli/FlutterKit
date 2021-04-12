@@ -84,7 +84,7 @@ class DefaultLHRoutePushObserver implements LHRoutePushObserver {
     }
     Future.delayed(Duration(milliseconds: 500), () {
       _removeRoutes.forEach((element) {
-        Navigator.of(context).removeRoute(element);
+        Navigator.of(context).removeRoute(element as Route);
         LHRouteObserver.instance.routes.remove(element);
       });
       _removeRoutes.clear();

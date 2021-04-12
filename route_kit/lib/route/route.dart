@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:route_kit/route/flutter_route.dart';
+import 'package:route_kit/transition/transition.dart';
 
 typedef RouteWidgetBuilder = Widget Function(BuildContext context, Map<String, dynamic> params);
 
@@ -65,9 +67,35 @@ abstract class LHPageRoute extends LHRoute {
   /// 为null则不进行限制
   RouteDeepLimit? get deepLimit => null;
 
+  /// 页面动画类型
+  LHRouteTransition get transition => LHRouteTransition();
+
   @override
   String toString() {
     return '${objectRuntimeType(this, 'LHPageRoute')}("$name", $deepLimit)';
+  }
+
+  Route<Map<dynamic, dynamic>> get toFlutterRoute {
+    switch (transition.transitionType) {
+      case TransitionType.native:
+      case TransitionType.material:
+      case TransitionType.materialFullScreenDialog:
+        return LHMaterialPageRoute(
+          routeDefinition: this,
+          builder: (BuildContext context) => builder(context, actualParams),
+        );
+      case TransitionType.cupertino:
+      case TransitionType.cupertinoFullScreenDialog:
+        return LHCupertinoPageRoute(
+          routeDefinition: this,
+          builder: (BuildContext context) => builder(context, actualParams),
+        );
+      default:
+        return LHPageRouteBuilder(
+          routeDefinition: this,
+          builder: (BuildContext context) => builder(context, actualParams),
+        );
+    }
   }
 }
 

@@ -6,17 +6,11 @@ import 'package:route_kit/observers/route_observer.dart';
 import 'package:route_kit/routers/router.dart';
 
 class FlutterRouter extends LHRouter<LHPageRoute> {
-
   @override
   Future<Map<dynamic, dynamic>> push(BuildContext context, LHPageRoute route) async {
     await Future.wait(LHNavigator.routePushObservers.map((e) => e.onBeforePush(context, route)));
 
-    LHFlutterRoute flutterRoute = LHFlutterRoute(
-      routeDefinition: route,
-      builder: (BuildContext context) => route.builder(context, route.actualParams),
-    );
-
-    Map<dynamic, dynamic>? result = await Navigator.of(context).push(flutterRoute);
+    Map<dynamic, dynamic>? result = await Navigator.of(context).push(route.toFlutterRoute);
 
     await Future.wait(LHNavigator.routePushObservers.map((e) => e.onAfterPush(context, route)));
 
@@ -24,17 +18,12 @@ class FlutterRouter extends LHRouter<LHPageRoute> {
   }
 
   @override
-  Future<Map<dynamic, dynamic>> pushAndRemoveUtil(BuildContext context, LHPageRoute route,
-      LHRoutePredicate predicate) async {
+  Future<Map<dynamic, dynamic>> pushAndRemoveUtil(
+      BuildContext context, LHPageRoute route, LHRoutePredicate predicate) async {
     await Future.wait(LHNavigator.routePushObservers.map((e) => e.onBeforePush(context, route)));
 
-    LHFlutterRoute flutterRoute = LHFlutterRoute(
-      routeDefinition: route,
-      builder: (BuildContext context) => route.builder(context, route.actualParams),
-    );
-
     Map<dynamic, dynamic>? result = await Navigator.of(context).pushAndRemoveUntil(
-        flutterRoute, (route) => route is LHFlutterRoute && predicate.call(route));
+        route.toFlutterRoute, (route) => route is LHFlutterRoute && predicate.call(route as LHFlutterRoute));
 
     await Future.wait(LHNavigator.routePushObservers.map((e) => e.onAfterPush(context, route)));
 
@@ -78,7 +67,7 @@ class FlutterRouter extends LHRouter<LHPageRoute> {
   @override
   bool popRemovable<T extends LHRemovablePageRoute>(BuildContext context) {
     LHRouteObserver.instance.routes.where((element) => element.routeDefinition is T).forEach((element) {
-      Navigator.of(context).removeRoute(element);
+      Navigator.of(context).removeRoute(element as Route);
     });
     return true;
   }

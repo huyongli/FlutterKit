@@ -23,7 +23,7 @@ class LHRouteObserver extends RouteObserver {
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPush(route, previousRoute);
     if (route is LHFlutterRoute) {
-      routes.add(route);
+      routes.add(route as LHFlutterRoute);
     }
   }
 }
