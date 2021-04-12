@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:route_kit/navigator.dart';
 import 'package:route_kit_example/common/home_item.dart';
 import 'package:route_kit_example/route/routes.dart';
+import 'package:route_kit/transition/transition.dart';
+import 'package:route_kit_example/route/routes.dart';
 
 class HomePage extends StatelessWidget {
   final List<HomeItem> items = [
@@ -64,6 +66,10 @@ class HomePage extends StatelessWidget {
     HomeItem(
       title: 'Pop removable route',
       onTapped: (BuildContext context) => LHNavigator.push(context, FirstRemovableRoute(title: 'FirstRemovableRoute 1')),
+    ),
+    HomeItem(
+      title: 'Transition route',
+      onTapped: (BuildContext context) => LHNavigator.push(context, LHTransitionRoute(type: TransitionType.native, isHome: true)),
     ),
   ];
 

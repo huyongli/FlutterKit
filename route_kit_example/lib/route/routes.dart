@@ -1,10 +1,13 @@
 import 'package:route_kit/route/route.dart';
+import 'package:route_kit/transition/transition.dart';
 import 'package:route_kit_example/page/common_page.dart';
 import 'package:route_kit_example/page/deep_limit_page.dart';
 import 'package:route_kit_example/page/home_page.dart';
 import 'package:route_kit_example/page/push_and_remove_page.dart';
 import 'package:route_kit_example/page/removable_page.dart';
 import 'package:route_kit_example/page/return_page.dart';
+
+import '../page/transition_page.dart';
 
 class HomePageRoute extends LHPageRoute {
   @override
@@ -175,4 +178,20 @@ class UnknownRout extends LHPageRoute {
 
   @override
   String get name => 'UnknownRout';
+}
+
+class LHTransitionRoute extends LHPageRoute {
+  final TransitionType type;
+  final bool isHome;
+
+  LHTransitionRoute({required this.type, this.isHome = false});
+
+  @override
+  RouteWidgetBuilder get builder => (context, params) => TransitionPage(title: type.toString(), isHome: isHome);
+
+  @override
+  String get name => 'TransitionRoute';
+
+  @override
+  LHRouteTransition get transition => LHRouteTransition(transitionType: type);
 }

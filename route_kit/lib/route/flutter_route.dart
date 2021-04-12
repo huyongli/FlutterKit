@@ -63,6 +63,7 @@ class LHCupertinoPageRoute extends CupertinoPageRoute<Map<dynamic, dynamic>> wit
   LHFlutterRouteSettings get routeSettings => settings as LHFlutterRouteSettings;
 }
 
+const _defaultTransitionDuration = const Duration(milliseconds: 250);
 class LHPageRouteBuilder extends PageRouteBuilder<Map<dynamic, dynamic>> with LHFlutterRoute {
   final LHPageRoute _routeDefinition;
 
@@ -73,8 +74,8 @@ class LHPageRouteBuilder extends PageRouteBuilder<Map<dynamic, dynamic>> with LH
             return builder(context);
           },
           settings: LHFlutterRouteSettings(name: routeDefinition.name, params: routeDefinition.params),
-          transitionDuration: routeDefinition.transition.transitionDuration,
-          reverseTransitionDuration: routeDefinition.transition.reverseTransitionDuration,
+          transitionDuration: routeDefinition.transition.transitionDuration ?? _defaultTransitionDuration,
+          reverseTransitionDuration: routeDefinition.transition.reverseTransitionDuration ?? _defaultTransitionDuration,
         );
 
   @override
@@ -100,6 +101,12 @@ extension LHRouteTransitionExt on LHRouteTransition {
           break;
         case TransitionType.fadeIn:
           widget = FadeTransition(opacity: animation, child: child);
+          break;
+        case TransitionType.scale:
+          widget = ScaleTransition(scale: animation, child: child);
+          break;
+        case TransitionType.rotationScale:
+          widget = RotationTransition(turns: animation, child: ScaleTransition(scale: animation, child: child));
           break;
         case TransitionType.inFromBottom:
         case TransitionType.inFromLeft:

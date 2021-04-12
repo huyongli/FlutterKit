@@ -8,4 +8,5 @@ export 'observers/route_observer.dart';
 export 'routers/router.dart';
 export 'routers/action_router.dart';
 export 'routers/flutter_router.dart';
+export 'transition/transition.dart';
 export 'navigator.dart';
