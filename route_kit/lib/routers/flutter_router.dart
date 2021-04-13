@@ -47,7 +47,7 @@ class FlutterRouter extends LHRouter<LHPageRoute> {
       LHFlutterRoute flutterRoute = LHRouteObserver.instance.routes.firstWhere((element) {
         return element.routeDefinition == route;
       });
-      Navigator.of(context).popUntil((predicate) => predicate == flutterRoute);
+      Navigator.of(context).popUntil((predicate) => predicate == flutterRoute as Route);
       return true;
     } catch (e) {
       /// 路由栈中没有要显示的路由
