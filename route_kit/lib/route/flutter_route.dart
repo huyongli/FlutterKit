@@ -114,11 +114,11 @@ extension LHRouteTransitionExt on LHRouteTransition {
         case TransitionType.inFromTop:
           widget = _directionTransitionWidget(animation, child);
           break;
-        default:
-
-          /// [TransitionType.none]
+        case TransitionType.none:
           widget = child;
           break;
+        default:
+          throw StateError('Not support custom transition');
       }
       return widget;
     };
