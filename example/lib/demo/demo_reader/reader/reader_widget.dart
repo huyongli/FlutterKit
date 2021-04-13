@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:laohu_kit/business/page_state/page_state_widget_providing.dart';
+import 'package:laohu_kit/business/page_state/page_state.dart';
 
 import 'factory/factorys.dart';
 import 'page_widget.dart';
@@ -40,7 +40,7 @@ class ReaderWidget extends StatefulWidget {
   _ReaderWidgetState createState() => _ReaderWidgetState();
 }
 
-class _ReaderWidgetState extends State<ReaderWidget> with PageStateWidgetProviding {
+class _ReaderWidgetState extends State<ReaderWidget> {
   ReaderViewModel _viewModel;
   PageController _pageController = PageController(keepPage: false);
 
@@ -92,17 +92,21 @@ class _ReaderWidgetState extends State<ReaderWidget> with PageStateWidgetProvidi
             children: <Widget>[
               Positioned.fill(child: widget.background ?? Container(color: Colors.white70)),
               Positioned.fill(
-                child: buildPageStateStreamWidget(
+                child: StreamBuilder<PageState>(
                   stream: _viewModel.articleStream,
-                  widgetBuilder: (state) {
-                    int pageCount = state.model;
+                  builder: (context, snap) {
+                    PageState state = snap.data;
+                    if (state is! SuccessState) {
+                      return Container();
+                    }
+                    int pageCount = (state as SuccessState).model;
                     return PageView.builder(
                       controller: _pageController,
                       itemBuilder: (BuildContext context, int index) {
                         if (index == pageCount - 1) {
                           return widget.loadingWidget ?? Container(
-                            alignment: Alignment.center,
-                            child: SizedBox(width: 50, height: 50, child: CircularProgressIndicator())
+                              alignment: Alignment.center,
+                              child: SizedBox(width: 50, height: 50, child: CircularProgressIndicator())
                           );
                         } else {
                           var page = _viewModel.getPage(index);
@@ -111,7 +115,7 @@ class _ReaderWidgetState extends State<ReaderWidget> with PageStateWidgetProvidi
                       },
                       itemCount: pageCount,
                     );
-                  }
+                  },
                 )
               )
             ],
