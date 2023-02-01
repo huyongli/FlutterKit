@@ -7,15 +7,15 @@ import 'path/path_manager.dart';
 abstract class DrawDelegate {
   final PathManager pathManager;
 
-  Point get touchPoint => pathManager.touchPoint?.clone();
+  Point get touchPoint => pathManager.touchPoint.clone();
 
-  DrawDelegate({this.pathManager}) : assert(pathManager != null);
+  DrawDelegate({required this.pathManager});
 
   void draw(Canvas canvas, Paint paint, Size size);
 }
 
 class DefaultDrawDelegate extends DrawDelegate {
-  DefaultDrawDelegate({PathManager pathManager}) : super(pathManager: pathManager);
+  DefaultDrawDelegate({required PathManager pathManager}) : super(pathManager: pathManager);
 
   @override
   void draw(Canvas canvas, Paint paint, Size size) {
@@ -28,7 +28,7 @@ class DefaultDrawDelegate extends DrawDelegate {
 }
 
 class TouchDrawDelegate extends DrawDelegate {
-  TouchDrawDelegate({PathManager pathManager}) : super(pathManager: pathManager);
+  TouchDrawDelegate({required PathManager pathManager}) : super(pathManager: pathManager);
 
   @override
   void draw(Canvas canvas, Paint paint, Size size) {

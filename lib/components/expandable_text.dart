@@ -15,7 +15,7 @@ class ExpandableText extends StatefulWidget {
   final String collapseText;
 
   /// 文本内容的样式
-  final TextStyle style;
+  final TextStyle? style;
 
   /// "展开"、"收起"的文本颜色
   final Color linkColor;
@@ -89,7 +89,7 @@ class _ExpandableTextState extends State<ExpandableText> {
       };
 
     if (widget.onExpandChanged != null && widget.expanded == true) {
-      WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         widget.onExpandChanged?.call(true);
       });
     }
@@ -140,7 +140,7 @@ class _ExpandableTextState extends State<ExpandableText> {
           TextSpan(text: _expanded ? widget.text : widget.text.substring(0, endPosition), style: widget.style),
           TextSpan(
             text: _expanded ? widget.collapseText : widget.expandText,
-            style: widget.style.copyWith(color: widget.linkColor),
+            style: widget.style?.copyWith(color: widget.linkColor),
             recognizer: _tapGestureRecognizer,
           ),
           if (widget.iconSize > 0)

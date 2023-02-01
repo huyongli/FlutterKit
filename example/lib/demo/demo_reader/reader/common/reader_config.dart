@@ -5,7 +5,7 @@ class ReaderConfig {
   static const String offsetStart = 'start';
   static const String offsetEnd = 'end';
 
-  MediaQueryData _mediaQuery;
+  late MediaQueryData _mediaQuery;
   double titleMargin = 10;
 
   ReaderConfig._internal() {
@@ -16,9 +16,9 @@ class ReaderConfig {
 
   static ReaderConfig get instance => _instance;
 
-  EdgeInsetsGeometry _padding;
-  double _fontSize;
-  double _titleFontSize;
+  late EdgeInsetsGeometry? _padding;
+  late double? _fontSize;
+  late double? _titleFontSize;
 
   EdgeInsetsGeometry get padding {
     return _padding ?? EdgeInsets.only(
@@ -29,7 +29,7 @@ class ReaderConfig {
     );
   }
 
-  set padding(EdgeInsetsGeometry padding) {
+  set padding(EdgeInsetsGeometry? padding) {
     this._padding = padding;
   }
 
@@ -37,7 +37,7 @@ class ReaderConfig {
     return _fontSize ?? 16;
   }
 
-  set fontSize(double fontSize) {
+  set fontSize(double? fontSize) {
     this._fontSize = fontSize;
   }
 
@@ -45,7 +45,7 @@ class ReaderConfig {
     return _titleFontSize ?? 16;
   }
 
-  set titleFontSize(double fontSize) {
+  set titleFontSize(double? fontSize) {
     this._titleFontSize = fontSize;
   }
 

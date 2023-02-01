@@ -10,7 +10,7 @@ class ReaderFactory extends ArticleFactory {
   ReaderFactory();
 
   @override
-  Future<IArticle> fetchNextArticle(IArticle currentArticle) async {
+  Future<IArticle> fetchNextArticle(IArticle? currentArticle) async {
     int id;
     if (currentArticle == null) {
       id = 1000;

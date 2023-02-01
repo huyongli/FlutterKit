@@ -9,7 +9,7 @@ class StaggerAnimationPage extends StatefulWidget {
 }
 
 class _StaggerAnimationPageState extends State<StaggerAnimationPage> with TickerProviderStateMixin {
-  AnimationController _controller;
+  late AnimationController _controller;
 
   @override
   void initState() {
@@ -61,11 +61,11 @@ class _StaggerAnimationPageState extends State<StaggerAnimationPage> with Ticker
 class StaggerAnimation extends StatelessWidget {
 
   final Animation<double> controller;
-  Animation<double> height;
-  Animation<EdgeInsets> padding;
-  Animation<Color> color;
+  late Animation<double> height;
+  late Animation<EdgeInsets> padding;
+  late Animation<Color?> color;
 
-  StaggerAnimation({Key key, this.controller}): super(key: key) {
+  StaggerAnimation({super.key, required this.controller}) {
     height = Tween<double>(begin: 0, end: 300)
         .animate(CurvedAnimation(
           parent: controller,
@@ -91,7 +91,7 @@ class StaggerAnimation extends StatelessWidget {
     );
   }
 
-  Widget _buildAnimation(BuildContext context, Widget child) {
+  Widget _buildAnimation(BuildContext context, Widget? child) {
     return Container(
       alignment: Alignment.bottomCenter,
       padding: padding.value,

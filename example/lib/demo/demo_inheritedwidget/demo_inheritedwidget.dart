@@ -35,7 +35,7 @@ class _DemoInheritedWidgetState extends State<DemoInheritedWidget> {
                 padding: EdgeInsets.only(bottom: 20),
                 child: TestDataWidget(),
               ),
-              RaisedButton(
+              ElevatedButton(
                 child: Text('Increment'),
                 onPressed: () => setState(() => ++count),
               ),

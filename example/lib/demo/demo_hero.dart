@@ -22,7 +22,7 @@ class HeroAnimationRoute extends StatelessWidget {
           ),
           onTap: () {
             Navigator.push(context, PageRouteBuilder(
-                pageBuilder: (BuildContext context, Animation animation, Animation secondaryAnimation) {
+                pageBuilder: (BuildContext context, Animation<double> animation, Animation secondaryAnimation) {
                   return new FadeTransition(
                     opacity: animation,
                     child: CommonPage.builder(child: Center(

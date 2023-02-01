@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:example/common/common_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:laohu_kit/laohu_kit.dart';
 
 class DemoKeyBoard extends StatefulWidget {
@@ -40,14 +39,14 @@ class _DemoKeyBoardState extends State<DemoKeyBoard> with WidgetsBindingObserver
             children: <Widget>[
               TextField(focusNode: focusNode),
               SizedBox(height: 20),
-              RaisedButton(
+              ElevatedButton(
                   child: Text('show keyboard'),
                   onPressed: () {
                     UIUtil.showKeyboard(context, focusNode);
                   }
               ),
               SizedBox(height: 20),
-              RaisedButton(
+              ElevatedButton(
                   child: Text('hide keyboard'),
                   onPressed: () {
                     UIUtil.hideKeyboard(context);

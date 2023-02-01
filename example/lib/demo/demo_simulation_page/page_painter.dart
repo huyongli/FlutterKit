@@ -16,7 +16,7 @@ class PagePainter extends CustomPainter {
     ..style = PaintingStyle.fill;
   final DrawDelegate drawDelegate;
 
-  PagePainter({this.drawDelegate}) : super();
+  PagePainter({required this.drawDelegate}) : super();
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -48,10 +48,10 @@ class Line {
 }
 
 class Point {
-  double x;
-  double y;
+  late double x;
+  late double y;
 
-  Point({this.x, this.y});
+  Point({x, y});
 
   Offset get offset => Offset(x, y);
 

@@ -48,12 +48,12 @@ class _MainWidgetState extends State<MainWidget> {
           children: <Widget>[
             Text(result),
             SizedBox(height: 20),
-            RaisedButton(
+            ElevatedButton(
               onPressed: () => requestMap(),
               child: new Text('请求Map'),
             ),
             SizedBox(height: 20),
-            RaisedButton(
+            ElevatedButton(
               onPressed: () => requestList(),
               child: new Text('请求List'),
             )

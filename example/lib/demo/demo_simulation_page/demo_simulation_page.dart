@@ -17,12 +17,12 @@ class DemoSimulationPage extends StatefulWidget {
 class _DemoSimulationPageState extends State<DemoSimulationPage> with SingleTickerProviderStateMixin {
   final SimulationViewModel viewModel = SimulationViewModel();
 
-  AnimationController _controller;
-  Animation<Point> _animation;
+  late AnimationController _controller;
+  late Animation<Point> _animation;
   bool _isAnimating = false;
 
   final PathManager pathManager = PathManager(color: PathColor());
-  DrawDelegate currentDrawDelegate;
+  late DrawDelegate currentDrawDelegate;
 
   @override
   void initState() {

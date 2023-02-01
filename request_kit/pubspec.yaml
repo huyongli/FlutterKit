@@ -1,11 +1,10 @@
 name: request_kit
 description: A new Flutter package for request
 version: 0.0.1
-author:
-homepage:
+homepage: https://github.com/huyongli/FlutterKit
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.19.0 <3.0.0"
   flutter: ">=1.17.0"
 
 dependencies:

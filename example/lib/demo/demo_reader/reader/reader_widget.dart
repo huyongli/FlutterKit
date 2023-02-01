@@ -13,35 +13,33 @@ typedef ArticleFactoryBuilder = ArticleFactory Function();
 class ReaderWidget extends StatefulWidget {
 
   ReaderWidget({
-    Key key,
-    @required this.builder,
+    super.key,
+    required this.builder,
     this.previousCacheSize = 10000,
     this.nextCacheSize = 1,
     this.padding,
-    this.textStyle,
+    required this.textStyle,
     this.titleStyle,
-    this.background,
+    required this.background,
     this.loadingWidget
-  }): assert(builder != null),
-      assert(previousCacheSize > 0),
-      assert(nextCacheSize > 0),
-      super(key: key);
+  }): assert(previousCacheSize > 0),
+      assert(nextCacheSize > 0);
 
   final Widget background;
   final ArticleFactoryBuilder builder;
   final int previousCacheSize;
   final int nextCacheSize;
-  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? padding;
   final TextStyle textStyle;
-  final TextStyle titleStyle;
-  final Widget loadingWidget;
+  final TextStyle? titleStyle;
+  final Widget? loadingWidget;
 
   @override
   _ReaderWidgetState createState() => _ReaderWidgetState();
 }
 
 class _ReaderWidgetState extends State<ReaderWidget> {
-  ReaderViewModel _viewModel;
+  late ReaderViewModel _viewModel;
   PageController _pageController = PageController(keepPage: false);
 
   @override
@@ -61,7 +59,7 @@ class _ReaderWidgetState extends State<ReaderWidget> {
   }
 
   void _updateConfig() {
-    ReaderConfig.instance.fontSize = widget.textStyle?.fontSize;
+    ReaderConfig.instance.fontSize = widget.textStyle.fontSize;
     ReaderConfig.instance.padding = widget.padding;
     ReaderConfig.instance.titleFontSize = widget.titleStyle?.fontSize;
   }
@@ -95,7 +93,7 @@ class _ReaderWidgetState extends State<ReaderWidget> {
                 child: StreamBuilder<PageState>(
                   stream: _viewModel.articleStream,
                   builder: (context, snap) {
-                    PageState state = snap.data;
+                    PageState? state = snap.data;
                     if (state is! SuccessState) {
                       return Container();
                     }

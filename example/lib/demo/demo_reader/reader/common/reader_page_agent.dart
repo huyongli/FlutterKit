@@ -15,8 +15,8 @@ class ReaderPageAgent {
   double get pageFontSize => ReaderConfig.instance.fontSize;
   double get pageTitleSize => ReaderConfig.instance.titleFontSize;
 
-  int maxLines;
-  double titleHeight;
+  late int maxLines;
+  late double titleHeight;
 
   List<Map<String, int>> getPageOffsets(IArticle article) {
     String content = article.getContent();

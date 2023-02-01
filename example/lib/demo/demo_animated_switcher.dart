@@ -31,7 +31,7 @@ class _DemoAnimatedSwitcherState extends State<DemoAnimatedSwitcher> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              RaisedButton(
+              ElevatedButton(
                 child: Text(_currentPage == 1 ? 'Go' : 'Back'),
                 onPressed: () {
                   setState(() {
@@ -45,7 +45,7 @@ class _DemoAnimatedSwitcherState extends State<DemoAnimatedSwitcher> {
                 duration: Duration(milliseconds: 200),
                 child: Text('$_count', key: ValueKey(_count), style: TextStyle(fontSize: 18)),
                 transitionBuilder: (Widget child, Animation<double> animation) {
-                  AxisDirection direction;
+                  late AxisDirection direction;
                   switch (_count % 4) {
                     case 0:
                       direction = AxisDirection.up;
@@ -68,7 +68,7 @@ class _DemoAnimatedSwitcherState extends State<DemoAnimatedSwitcher> {
                 }
               ),
               SizedBox(height: 20),
-              RaisedButton(
+              ElevatedButton(
                 child: Text('计数'),
                 onPressed: () {
                   setState(() {
@@ -101,16 +101,16 @@ class _DemoAnimatedSwitcherState extends State<DemoAnimatedSwitcher> {
 class MySlideTransition extends AnimatedWidget {
   final bool transformHitTests;
   final Widget child;
-  Animation<Offset> get position => listenable;
+  Animation<Offset> get position => listenable as Animation<Offset>;
   final bool isBack;
 
   MySlideTransition({
-    Key key,
-    @required Animation<Offset> position,
+    super.key,
+    required Animation<Offset> position,
     this.transformHitTests = true,
-    this.isBack,
-    this.child
-  }): assert(position != null), super(key: key, listenable: position);
+    required this.isBack,
+    required this.child
+  }): super(listenable: position);
 
   @override
   Widget build(BuildContext context) {

@@ -1,11 +1,10 @@
 name: laohu_kit
 description: Flutter common kit.
 version: 1.0.0
-author:
-homepage:
+homepage: https://github.com/huyongli/FlutterKit
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.19.0 <3.0.0"
 
 dependencies:
   flutter:

@@ -5,8 +5,8 @@ import 'viewmodel/reader_viewmodel.dart';
 import 'common/reader_config.dart';
 
 class PageWidget extends StatelessWidget {
-  final PageModel page;
-  final TextStyle titleStyle;
+  final PageModel? page;
+  final TextStyle? titleStyle;
 
   PageWidget({this.page, this.titleStyle});
 
@@ -18,14 +18,14 @@ class PageWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            page.article.article.getTitle(),
+            page?.article.article.getTitle() ?? "",
             style: titleStyle ?? TextStyle(fontSize: ReaderConfig.instance.titleFontSize, color: Colors.black45)
           ),
           SizedBox(height: ReaderConfig.instance.titleMargin),
           Text.rich(
             TextSpan(children: [
               TextSpan(
-                text: page.article.getPageText(page.index).trimRight(),
+                text: page?.article.getPageText(page?.index ?? 0).trimRight(),
                 style: TextStyle(fontSize: ReaderConfig.instance.fontSize)
               )
             ]),

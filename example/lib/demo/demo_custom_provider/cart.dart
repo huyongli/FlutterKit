@@ -6,7 +6,7 @@ class CartItem {
   double price;
   int count;
 
-  CartItem({this.price, this.count});
+  CartItem({required this.price, required this.count});
 }
 
 class CartModel extends ChangeNotifier {

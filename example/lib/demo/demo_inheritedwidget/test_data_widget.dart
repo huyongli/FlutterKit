@@ -18,9 +18,8 @@ class _TestDataWidgetState extends State<TestDataWidget> {
   @override
   Widget build(BuildContext context) {
     print('TestDataWidget build');
-    var text = ShareDataWidget.of(context).data.toString();
-//    var text = 'text';
-    return Text(text);
+    var text = ShareDataWidget.of(context)?.data.toString();
+    return Text(text ?? '');
   }
 
 

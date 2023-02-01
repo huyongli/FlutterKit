@@ -4,11 +4,11 @@ class ShareDataWidget extends InheritedWidget {
   final int data; // 子树中共享的数据
 
   ShareDataWidget({
-    @required this.data,
-    Widget child
+    required this.data,
+    required Widget child
   }): super(child: child);
 
-  static ShareDataWidget of(BuildContext context) {
+  static ShareDataWidget? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<ShareDataWidget>();
   }
 

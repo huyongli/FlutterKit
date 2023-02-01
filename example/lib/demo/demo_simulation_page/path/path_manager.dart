@@ -21,7 +21,7 @@ class PathManager extends IPathDelegate {
   PathColor color;
   PathDelegate _currentPathDelegate = DefaultPathDelegate();
 
-  TouchArea _touchArea;
+  late TouchArea _touchArea;
 
   TouchArea get touchArea => _touchArea;
   
@@ -32,7 +32,7 @@ class PathManager extends IPathDelegate {
 
   Point get touchPoint => _currentPathDelegate.touchPoint;
 
-  PathManager({@required this.color}): assert(color != null);
+  PathManager({required this.color});
 
   void setTouchAreaByTouchPoint(Point touchPoint, Size size) {
     this.touchArea = touchPoint.getTouchArea(size, this.touchArea);

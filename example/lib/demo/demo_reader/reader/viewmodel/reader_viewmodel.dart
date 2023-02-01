@@ -12,7 +12,7 @@ class PageModel {
   final CacheArticle article;
   final int index;
 
-  PageModel({this.article, this.index});
+  PageModel({required this.article, required this.index});
 }
 
 class CacheArticle {
@@ -20,14 +20,14 @@ class CacheArticle {
   final List<Map<String, int>> pages;
   final bool isFirst;
 
-  CacheArticle({this.article, this.pages, this.isFirst = false}): assert(article != null), assert(pages != null);
+  CacheArticle({required this.article, required this.pages, this.isFirst = false});
 
   int get pageCount => pages.length;
 
   String getPageText(int pageIndex) {
     var start = pages[pageIndex][ReaderConfig.offsetStart];
     var end = pages[pageIndex][ReaderConfig.offsetEnd];
-    return article.getContent().substring(start, end);
+    return article.getContent().substring(start ?? 0, end);
   }
 }
 
@@ -40,7 +40,7 @@ class ReaderViewModel {
   final int nextCacheSize;
 
   final Stack<CacheArticle> _previous = Stack<CacheArticle>();
-  CacheArticle _current;
+  late CacheArticle _current;
   final ListQueue<CacheArticle> _next;
   
   int get previousPageCount {
@@ -49,7 +49,7 @@ class ReaderViewModel {
     return count;
   }
 
-  int get currentPageCount => _current?.pageCount ?? 0;
+  int get currentPageCount => _current.pageCount ?? 0;
   
   int get _totalPageCount {
     int count = previousPageCount + _current.pageCount;
@@ -57,7 +57,7 @@ class ReaderViewModel {
     return count;
   }
 
-  ReaderViewModel({this.factory, this.previousCacheSize, this.nextCacheSize})
+  ReaderViewModel({required this.factory, required this.previousCacheSize, required this.nextCacheSize})
       : _next = ListQueue<CacheArticle>(nextCacheSize);
 
   void notifyPageCount() {
@@ -81,7 +81,7 @@ class ReaderViewModel {
     if (_next.length >= nextCacheSize) {
       return;
     }
-    IArticle article;
+    late IArticle article;
     try {
       article = await factory.fetchNextArticle(preArticle);
       var pages = ReaderPageAgent.instance.getPageOffsets(article);
@@ -90,7 +90,7 @@ class ReaderViewModel {
     } catch(e) {
       // nothing to do
     }
-    _fetchNextCacheArticle(article ?? preArticle);
+    _fetchNextCacheArticle(article);
   }
   
   PageModel getPage(int index) {

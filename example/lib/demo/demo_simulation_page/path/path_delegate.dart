@@ -23,17 +23,17 @@ abstract class IPathDelegate {
 
 abstract class PathDelegate extends IPathDelegate {
   final Path _path = Path();
-  Point _ap;
-  Point _fp;
-  Point _gp;
-  Point _ep;
-  Point _hp;
-  Point _cp;
-  Point _jp;
-  Point _bp;
-  Point _kp;
-  Point _dp;
-  Point _ip;
+  late Point _ap;
+  late Point _fp;
+  late Point _gp;
+  late Point _ep;
+  late Point _hp;
+  late Point _cp;
+  late Point _jp;
+  late Point _bp;
+  late Point _kp;
+  late Point _dp;
+  late Point _ip;
 
   Point get touchPoint => _ap;
 

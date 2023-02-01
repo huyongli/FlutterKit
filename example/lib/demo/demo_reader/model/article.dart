@@ -2,11 +2,11 @@
 import 'package:example/demo/demo_reader/reader/factory/factorys.dart';
 
 class Article extends IArticle {
-  int id;
-  int nextId;
-  int prevId;
-  String title;
-  String content;
+  late int id;
+  late int nextId;
+  late int prevId;
+  late String title;
+  late String content;
 
   Article();
 

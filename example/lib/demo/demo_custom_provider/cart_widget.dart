@@ -32,14 +32,14 @@ class _CartWidgetState extends State<CartWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Builder(builder: (context) => Consumer<CartModel>(
-                builder: (context, cart) => Text('总价：${cart.totalPrice}'),
+                builder: (context, cart) => Text('总价：${cart?.totalPrice}'),
               )),
               Builder(builder: (context) {
                 print('RaiseButton Build');
-                return RaisedButton(
+                return ElevatedButton(
                     child: Text('添加商品'),
                     onPressed: () {
-                      ChangeNotifierProvider.of<CartModel>(context, listen: false).add(CartItem(price: 20, count: 1));
+                      ChangeNotifierProvider.of<CartModel>(context, listen: false)?.add(CartItem(price: 20, count: 1));
                     }
                 );
               })

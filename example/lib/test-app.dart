@@ -66,10 +66,10 @@ class FlutterLayoutArticle extends StatefulWidget {
 //////////////////////////////////////////////////
 
 class _FlutterLayoutArticleState extends State<FlutterLayoutArticle> {
-  int count;
-  Widget example;
-  String code;
-  String explanation;
+  late int count;
+  late Widget example;
+  late String code;
+  late String explanation;
 
   @override
   void initState() {
@@ -177,17 +177,16 @@ class _FlutterLayoutArticleState extends State<FlutterLayoutArticle> {
 //////////////////////////////////////////////////
 
 class Button extends StatelessWidget {
-  final Key key;
   final bool isSelected;
   final int exampleNumber;
   final VoidCallback onPressed;
 
   Button({
-    this.key,
-    this.isSelected,
-    this.exampleNumber,
-    this.onPressed,
-  }) : super(key: key);
+    super.key,
+    required this.isSelected,
+    required this.exampleNumber,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
