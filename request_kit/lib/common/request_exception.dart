@@ -10,20 +10,6 @@ class RequestException extends Error {
   }
 }
 
-class ClientException extends Error {
-  final String? message;
-
-  ClientException(this.message);
-
-  @override
-  String toString() {
-    return '{message: $message}';
-  }
-}
-
-class CancelException extends Error {
-  @override
-  String toString() {
-    return 'The request canceled by client';
-  }
+class UnknownRequestException extends RequestException {
+  UnknownRequestException({int? httpCode, String? message}): super(httpCode: httpCode ?? -1, message: message);
 }

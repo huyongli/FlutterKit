@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:request_kit/dio/dio_interceptor.dart';
+import 'package:request_kit/interceptor/interceptor.dart';
 
-import '../config/request_config.dart';
 import '../factory/request_client.dart';
 import '../api/request.dart';
 import '../common/request_exception.dart';
@@ -9,10 +10,17 @@ import '../common/request_method.dart';
 class DioClient extends RequestClient {
   final Dio _dio = Dio();
   final CancelToken _token = CancelToken();
+  late final InterceptorsWrapper interceptor;
+
+  DioClient({
+    List<ResponseInterceptor>? responseInterceptors,
+    List<RequestInterceptor>? requestInterceptors,
+    List<ErrorInterceptor>? errorInterceptors,
+  }) : interceptor = DioInterceptor(responseInterceptors ?? [], requestInterceptors ?? [], errorInterceptors ?? []);
 
   @override
   Future<dynamic> execute(Request request) async {
-    _dio.interceptors.addAll(RequestConfig.instance.dioInterceptors);
+    _dio.interceptors.add(interceptor);
     try {
       Response response;
       switch (request.method) {
@@ -70,12 +78,7 @@ class DioClient extends RequestClient {
       return response.data;
     } catch (e) {
       if (e is DioError) {
-        switch (e.type) {
-          case DioErrorType.cancel:
-            throw CancelException();
-          default:
-            throw e;
-        }
+        throw e.error;
       } else {
         if (e is RequestException) {
           throw e;

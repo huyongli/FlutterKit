@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 
 /// milliseconds
 const int _timeOut = 30000;
@@ -37,6 +36,4 @@ class RequestConfig {
     assert(_domain.isNotEmpty);
     return _domain;
   }
-
-  List<InterceptorsWrapper> dioInterceptors = [];
 }
