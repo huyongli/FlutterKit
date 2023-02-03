@@ -90,10 +90,10 @@ class _ReaderWidgetState extends State<ReaderWidget> {
             children: <Widget>[
               Positioned.fill(child: widget.background ?? Container(color: Colors.white70)),
               Positioned.fill(
-                child: StreamBuilder<PageState>(
+                child: StreamBuilder<DataState>(
                   stream: _viewModel.articleStream,
                   builder: (context, snap) {
-                    PageState? state = snap.data;
+                    DataState? state = snap.data;
                     if (state is! SuccessState) {
                       return Container();
                     }

@@ -32,8 +32,8 @@ class CacheArticle {
 }
 
 class ReaderViewModel {
-  StreamController<PageState> _articleStream = StreamController();
-  Stream<PageState> get articleStream => _articleStream.stream;
+  StreamController<DataState> _articleStream = StreamController();
+  Stream<DataState> get articleStream => _articleStream.stream;
 
   final ArticleFactory factory;
   final int previousCacheSize;
