@@ -11,37 +11,37 @@ class DioInterceptor extends InterceptorsWrapper {
   DioInterceptor(this.responseInterceptors, this.requestInterceptors, this.errorInterceptors);
 
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+  Future onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     var request = requestResolver(options);
-    requestInterceptors.forEach((it) {
-      it.onRequest(request);
-    });
-    super.onRequest(options, handler);
+    for (RequestInterceptor item in requestInterceptors) {
+      await item.onRequest(request);
+    }
+    return super.onRequest(options, handler);
   }
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
+  Future onError(DioError err, ErrorInterceptorHandler handler) async {
     if (errorInterceptors.isNotEmpty) {
       if (err.response != null) {
-        errorInterceptors.forEach((it) {
-          it.onError(err.response?.statusCode, err.response?.statusMessage);
-        });
+        for (ErrorInterceptor item in errorInterceptors) {
+          await item.onError(err.response?.statusCode, err.response?.statusMessage);
+        }
       }
       if (err.error is RequestException) {
         throw err.error;
       }
       throw UnknownRequestException(message: err.message);
     }
-    super.onError(err, handler);
+    return super.onError(err, handler);
   }
 
   @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
+  Future onResponse(Response response, ResponseInterceptorHandler handler) async {
     var request = requestResolver(response.requestOptions);
-    responseInterceptors.forEach((it) {
-      it.onResponse(request, response.statusCode, response.data);
-    });
-    super.onResponse(response, handler);
+    for (ResponseInterceptor item in responseInterceptors) {
+      await item.onResponse(request, response.statusCode, response.data);
+    }
+    return super.onResponse(response, handler);
   }
 
   Request requestResolver(RequestOptions options) {

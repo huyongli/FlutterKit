@@ -19,8 +19,9 @@ class EmptyState extends DataState {
 
 class ErrorState extends DataState {
   String message;
+  Error? exception;
 
-  ErrorState({this.message = 'Page error'});
+  ErrorState({this.message = 'Page error', this.exception});
 }
 
 class NetworkErrorState extends ErrorState {
