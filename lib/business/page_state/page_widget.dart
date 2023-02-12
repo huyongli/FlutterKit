@@ -1,41 +1,43 @@
 import 'package:flutter/material.dart';
 
-enum PageStateType { empty, error, networkError, gone, loading }
+enum PageState { empty, error, networkError, gone, loading }
 
-class PageWidget extends StatelessWidget {
-  final PageStateType stateType;
+class StatePageWidget extends StatelessWidget {
+  final PageState state;
   final WidgetBuilder? emptyBuilder;
   final WidgetBuilder? errorBuilder;
   final WidgetBuilder? networkErrorBuilder;
   final WidgetBuilder? loadingBuilder;
   final Color color;
   final EdgeInsets padding;
+  final Function? onPressed;
 
-  const PageWidget({
+  const StatePageWidget({
     Key? key,
-    required this.stateType,
+    required this.state,
     this.emptyBuilder,
     this.errorBuilder,
     this.networkErrorBuilder,
     this.loadingBuilder,
+    this.onPressed,
     this.color = Colors.white,
     this.padding = EdgeInsets.zero,
-  })  : assert((stateType == PageStateType.empty && emptyBuilder != null) || stateType != PageStateType.empty),
-        assert((stateType == PageStateType.error && errorBuilder != null) || stateType != PageStateType.error),
-        assert((stateType == PageStateType.networkError && networkErrorBuilder != null) ||
-            stateType != PageStateType.networkError),
-        assert((stateType == PageStateType.loading && loadingBuilder != null) || stateType != PageStateType.loading),
+  })  : assert((state == PageState.empty && emptyBuilder != null) || state != PageState.empty),
+        assert((state == PageState.error && errorBuilder != null) || state != PageState.error),
+        assert((state == PageState.networkError && networkErrorBuilder != null) ||
+            state != PageState.networkError),
+        assert((state == PageState.loading && loadingBuilder != null) || state != PageState.loading),
         super(key: key);
 
   WidgetBuilder? get _builder {
-    switch (stateType) {
-      case PageStateType.empty:
+    switch (state) {
+      case PageState.empty:
         return emptyBuilder;
-      case PageStateType.error:
+      case PageState.error:
         return errorBuilder;
-      case PageStateType.networkError:
+      case PageState.networkError:
         return networkErrorBuilder;
-      case PageStateType.loading:
+      case PageState.loading:
         return loadingBuilder;
       default:
         return null;
@@ -44,7 +46,7 @@ class PageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (stateType == PageStateType.gone) {
+    if (state == PageState.gone) {
       return Container();
     }
     return Container(
@@ -52,7 +54,10 @@ class PageWidget extends StatelessWidget {
       color: color,
       padding: padding,
       alignment: Alignment.center,
-      child: _builder?.call(context),
+      child: GestureDetector(
+        onTap: () => onPressed?.call(),
+        child: _builder?.call(context),
+      ),
     );
   }
 }

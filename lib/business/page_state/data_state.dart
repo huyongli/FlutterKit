@@ -2,9 +2,8 @@ import 'package:laohu_kit/business/page_state/page_widget.dart';
 
 class DataState {}
 
-class IdleState extends DataState {
+class IdleState extends DataState {}
 
-}
 class LoadingState extends DataState {
   String message;
 
@@ -35,19 +34,19 @@ class SuccessState<Model> extends DataState {
 }
 
 extension PageStateExt on DataState {
-  PageStateType get toPageStateType {
+  PageState get toPageStateType {
     if (this is EmptyState) {
-      return PageStateType.empty;
+      return PageState.empty;
     }
     if (this is ErrorState) {
-      return PageStateType.error;
+      return PageState.error;
     }
     if (this is NetworkErrorState) {
-      return PageStateType.networkError;
+      return PageState.networkError;
     }
     if (this is LoadingState) {
-      return PageStateType.loading;
+      return PageState.loading;
     }
-    return PageStateType.gone;
+    return PageState.gone;
   }
 }

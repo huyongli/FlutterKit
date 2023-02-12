@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
 
-import 'package:laohu_kit/business/page_state/page_state.dart';
+import 'package:laohu_kit/business/page_state/data_state.dart';
 import 'package:laohu_kit/collection/stack.dart';
 
 import '../factory/factorys.dart';

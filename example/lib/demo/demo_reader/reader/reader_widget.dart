@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:laohu_kit/business/page_state/page_state.dart';
+import 'package:laohu_kit/business/page_state/data_state.dart';
 
 import 'factory/factorys.dart';
 import 'page_widget.dart';
